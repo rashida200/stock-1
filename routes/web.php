@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\CashierController;
+use App\Http\Controllers\FournisseurController;
 
 Route::get('/', function () {
     return redirect('/home');
@@ -20,6 +21,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth']], function() {
     // Admin routes
+    Route::get('/fournisseurs',[FournisseurController::class,'index']);
     Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function() {
         Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     });
