@@ -17,7 +17,7 @@ git clone https://github.com/rashida200/stock-1.git
 After cloning, go to the project directory:
 
 ```bash
-cd repo
+cd stock-1
 ```
 
 ### 3. Install PHP Dependencies
