@@ -12,7 +12,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
   </head>
   <body class="bg-light">
     <!-- Sidebar Backdrop -->
@@ -37,18 +37,19 @@
         <!-- Dashboard Content -->
         <div class="p-4">
             <!-- Stats Cards -->
-            <div class="row g-4 mb-4">
+            {{-- <div class="row g-4 mb-4">
                 @for ($i = 0; $i < 4; $i++)
                 <x-product-statistics-card></x-product-statistics-card>
                 @endfor
             </div>
-            <x-shart></x-shart>
+            <x-shart></x-shart> --}}
+            {{$slot}}
         </div>
       </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
   </body>
 </html>

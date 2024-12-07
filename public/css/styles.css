@@ -8,6 +8,7 @@
   transition: all 0.3s ease-in-out;
   z-index: 1000;
   overflow-y: auto; /* Allow sidebar content to scroll if necessary */
+  min-width: fit-content;
 }
 
 .nav-link {
