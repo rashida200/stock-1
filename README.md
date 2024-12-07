@@ -9,7 +9,7 @@ Follow these steps to install the Stock Management System on your local machine.
 Open your terminal and run the following command to clone the repository:
 
 ```bash
-git clone https://github.com/<username>/<repo>.git
+git clone https://github.com/rashida200/stock-1.git
 ```
 
 ### 2. Navigate to the Project Folder
