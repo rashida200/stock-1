@@ -1,6 +1,6 @@
-<div class="col-12 col-sm-6 col-lg-3">
+<div class="col-12 col-sm-6 col-lg-3 g-2">
     <div class="card stat-card h-100">
-    <div class="card-body">
+    <div class="card-body bg-white">
         <h6 class="text-muted">Total Products</h6>
         <h3 class="mb-2">1,234</h3>
         <p class="mb-0 text-success">

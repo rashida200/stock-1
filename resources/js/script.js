@@ -1,4 +1,5 @@
 // Enhanced Sidebar Toggle with Backdrop
+import Chart from 'chart.js/auto';
 const sidebar = document.getElementById("sidebar");
 const backdrop = document.getElementById("sidebarBackdrop");
 const sidebarToggle = document.getElementById("sidebarToggle");
@@ -92,5 +93,6 @@ window.addEventListener("resize", function () {
         cleanup = createResponsiveChart();
     }, 250);
 });
+
 
 
