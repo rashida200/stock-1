@@ -10,12 +10,18 @@ class FournisseurController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $fournisseurs = Fournisseur::paginate(10);
+        $search = $request->input('search');
 
-        return view('fournisseurs.index',compact('fournisseurs'));
+        $fournisseurs = Fournisseur::when($search, function ($query, $search) {
+            $query->where('nom', 'like', "%$search%")
+                ->orWhere('lice', 'like', "%$search%");
+        })->paginate(10);
+
+        return view('fournisseurs.index', compact('fournisseurs', 'search'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -29,18 +35,18 @@ class FournisseurController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'nom' => 'required',
-        'lice' => 'required',
-        'telephone' => 'required',
-        'rib' => 'required',
-    ]);
+    {
+        $request->validate([
+            'nom' => 'required',
+            'lice' => 'required',
+            'telephone' => 'required',
+            'rib' => 'required',
+        ]);
 
-    Fournisseur::create($request->all());
+        Fournisseur::create($request->all());
 
-    return redirect()->back()->with('success', 'Fournisseur added successfully.');
-}
+        return redirect()->back()->with('success', 'Fournisseur added successfully.');
+    }
 
     /**
      * Display the specified resource.
@@ -62,19 +68,19 @@ class FournisseurController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $fournisseur = Fournisseur::findOrFail($id);
+    {
+        $fournisseur = Fournisseur::findOrFail($id);
 
-    $validatedData = $request->validate([
-        'nom' => 'required|string|max:255',
-        'lice' => 'required|string|max:255',
-        'rib' => 'required|string|max:30',
-    ]);
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'lice' => 'required|string|max:255',
+            'rib' => 'required|string|max:30',
+        ]);
 
-    $fournisseur->update($validatedData);
+        $fournisseur->update($validatedData);
 
-    return redirect()->route('admin.fournisseurs')->with('success', 'Fournisseur mis à jour avec succès.');
-}
+        return redirect()->route('admin.fournisseurs')->with('success', 'Fournisseur mis à jour avec succès.');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -85,7 +91,6 @@ class FournisseurController extends Controller
         $fournisseur->delete(); // Delete the fournisseur
 
         // Redirect back with a success message
-        return redirect()->route('admin.fournisseurs')->with('success', 'Fournisseur supprimé avec succès.');
-
+        return redirect()->to(url()->previous())->with('success', 'Fournisseur supprimé avec succès');
     }
 }

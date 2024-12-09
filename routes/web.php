@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\CashierController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FournisseurController;
+use App\Http\Controllers\ProduitController;
 
 Route::get('/', function () {
     return redirect('/home');
@@ -27,6 +30,20 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/fournisseurs', [FournisseurController::class, 'store'])->name('admin.fournisseurs.store');
         Route::delete('/fournisseurs/{id}', [FournisseurController::class, 'destroy'])->name('admin.fournisseurs.destroy');
         Route::put('/fournisseurs/{id}', [FournisseurController::class, 'update'])->name('admin.fournisseurs.update');
+        Route::resource('utilisateurs', UserController::class)->except(['show']);
+        Route::delete('/utilisateurs/{user}', [UserController::class, 'destroy'])->name('utilisateurs.destroy');
+
+
+
+        Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
+        Route::post('/produits', [ProduitController::class, 'store'])->name('produits.store');
+        Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
+        Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
+
+        Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+        Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
+        Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
+        Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
     });
 
     // Manager routes
