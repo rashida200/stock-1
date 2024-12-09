@@ -41,7 +41,7 @@
                             <td>{{ $client->lice ?? 'Non renseigné' }}</td>
                             <td>{{ $client->telephone }}</td>
                             <td>{{ $client->adresse }}</td>
-                            <td>{{ $client->adresse_projet ?? 'Non renseignée' }}</td>
+                            <td>{{ $client->adresse_projet ?? $client->adresse }}</td>
                             <td>{{ $client->nombre_hectare ?? 'Non renseigné' }}</td>
                             <td class="align-middle">
                                 <div class="d-flex justify-content-center gap-1">
