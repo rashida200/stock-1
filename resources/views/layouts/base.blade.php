@@ -17,4 +17,5 @@
             </div>
         </div>
     </div>
+    @stack('scripts') <!-- Add this line to include scripts -->
 </x-parent-layout>

@@ -28,8 +28,13 @@
         </a>
     @endif
     @if (auth()->user()->type === 'admin')
-        <a class="nav-link mb-2 rounded {{ request()->is('admin/bon-commande*') ? 'active' : '' }}" href="#">
+        <a class="nav-link mb-2 rounded {{ request()->is('admin/bons-commande*') ? 'active' : '' }}" href="{{route('bons-commande.index')}}">
             <i class="fas fa-file-invoice me-2"></i>Bon De Commande
+        </a>
+    @endif
+    @if (auth()->user()->type === 'admin')
+        <a class="nav-link mb-2 rounded {{ request()->is('admin/devis*') ? 'active' : '' }}" href="{{route('devis.index')}}">
+            <i class="fas fa-file-invoice me-2"></i>Devis
         </a>
     @endif
 

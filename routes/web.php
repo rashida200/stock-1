@@ -4,9 +4,12 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BonCommandeController;
+use App\Http\Controllers\BonDeCommandeController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DevisController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\ProduitController;
 
@@ -44,6 +47,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
         Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
         Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
+
+        Route::resource('bons-commande', BonCommandeController::class);
+        Route::get('/bons-commande/{bonCommande}/print', [BonCommandeController::class, 'print'])->name('bons-commande.print');
+
+        Route::resource('devis', DevisController::class);
+        Route::get('/devis/{id}/print', [DevisController::class, 'print'])->name('devis.print');
+
+
     });
 
     // Manager routes

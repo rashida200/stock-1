@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('rib');
             $table->timestamps();
-
+            
         });
     }
 
