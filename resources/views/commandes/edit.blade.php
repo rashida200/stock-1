@@ -6,161 +6,172 @@
             @csrf
             @method('PUT')
 
-            <h5>Modifier Commande #{{ $commandeClient->id }}</h5>
-            <label for="statut">Statut</label>
-            <select name="statut" id="statut" class="form-control">
-                <option value="en attente" {{ $commandeClient->statut == 'en attente' ? 'selected' : '' }}>En attente</option>
-                <option value="expediée" {{ $commandeClient->statut == 'expediée' ? 'selected' : '' }}>Expédiée</option>
-                <option value="livree" {{ $commandeClient->statut == 'livree' ? 'selected' : '' }}>Livrée</option>
-                <option value="annulee" {{ $commandeClient->statut == 'annulee' ? 'selected' : '' }}>Annulée</option>
-            </select>
-            
+            <!-- Affichage des erreurs -->
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-            {{-- afficher client --}}
+            <!-- Client -->
             <div class="mb-3">
                 <label for="client_id" class="form-label">Client</label>
-                <select class="form-control w-100" id="client_id" name="client_id" required>
+                <select class="form-control" id="client_id" name="client_id" required>
                     <option value="">Choisir un client</option>
-                    @foreach($clients as $client)
-                        <option value="{{ $client->id }}" @if(old('client_id', $commandeClient->client_id) == $client->id) selected @endif>
+                    @foreach ($clients as $client)
+                        <option value="{{ $client->id }}" {{ $commandeClient->client_id == $client->id ? 'selected' : '' }}>
                             {{ $client->nom }}
                         </option>
                     @endforeach
                 </select>
             </div>
+
+            <!-- Date de commande -->
             <div class="mb-3">
-                <label for="date_commande" class="form-label">Date de Commande</label>
-                <input type="date" class="form-control w-100" id="date_commande" name="date_commande" value="{{ $commandeClient->date_commande }}" required>
+                <label>Date de commande</label>
+                <input type="date" name="date_commande" class="form-control"
+                       value="{{ $commandeClient->date_commande }}" required>
             </div>
-            
-            {{-- REGLEMENT --}}
+
+            <!-- Règlement -->
             <div class="mb-3">
-                <label for="reglement" class="form-label">Mode de Réglement</label>
-                <select class="form-control w-100" id="reglement" name="reglement" required>
-                    <option value="Espèce" @if($commandeClient->reglement == 'Espèce') selected @endif>Espèce</option>
-                    <option value="Chèque" @if($commandeClient->reglement == 'Chèque') selected @endif>Chèque</option>
-                    <option value="LCTraite" @if($commandeClient->reglement == 'LCTraite') selected @endif>LC Traite</option>
-                    <option value="Virement" @if($commandeClient->reglement == 'Virement') selected @endif>Virement</option>
-                    <option value="Prélèvement" @if($commandeClient->reglement == 'Prélèvement') selected @endif>Prélèvement</option>
-                    <option value="En Compte" @if($commandeClient->reglement == 'En Compte') selected @endif>En Compte</option>
-                    <option value="Délégation de créance" @if($commandeClient->reglement == 'Délégation de créance') selected @endif>Délégation de créance</option>
+                <label for="reglement" class="form-label">Règlement</label>
+                <select class="form-control" id="reglement" name="reglement" required>
+                    @foreach (['Espèce', 'Chèque', 'LCTraite', 'Virement', 'Prélèvement', 'En Compte', 'Délégation de créance'] as $type)
+                        <option value="{{ $type }}" {{ $commandeClient->reglement == $type ? 'selected' : '' }}>
+                            {{ $type }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
+
+            <!-- Référence du règlement -->
             <div class="mb-3">
-                <label for="ref-regl">Réference réglement</label>
-                <input type="text" name="ref_regl" class="form-control w-100" value="{{$commandeClient->ref_regl }}">
+                <label for="ref_regl" class="form-label">Référence Règlement</label>
+                <input type="text" class="form-control" id="ref_regl" name="ref_regl" 
+                       value="{{ $commandeClient->ref_regl }}">
             </div>
+
+            <!-- Produits -->
             <div class="mb-3">
-                <label for="produits" class="form-label">Produits Associés</label>
-                <table class="table table-bordered" id="produits-table-{{ $commandeClient->id }}">
+                <label class="form-label">Produits</label>
+                <table class="table table-bordered" id="produitsTable">
                     <thead>
                         <tr>
-                            <th>Nom du Produit</th>
+                            <th>Produit</th>
                             <th>Quantité</th>
                             <th>Prix Unitaire</th>
-                            <th>Remise (%)</th>
-                            <th>TVA</th>
-                            <th>Action</th>
+                            <th>Remise</th>
+                            <th>TVA (%)</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="produits-list-{{ $commandeClient->id }}">
+                    <tbody>
                         @foreach ($commandeClient->produits as $produit)
-                        <tr id="produit-{{ $produit->id }}-{{ $commandeClient->id }}">
-                            <td>{{ $produit->designation ?? 'N/A' }}</td>
+                        <tr>
                             <td>
-                                <input type="number" class="form-control w-100" name="produit_{{ $produit->id }}_qte" value="{{ $produit->pivot->qte_vte ?? 0 }}" min="0" required>
+                                <select class="form-control produit_id" name="produit_id[]" required>
+                                    @foreach ($produits as $p)
+                                        <option value="{{ $p->id }}" {{ $produit->id == $p->id ? 'selected' : '' }}>
+                                            {{ $p->designation }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </td>
                             <td>
-                                <input type="number" class="form-control w-100" name="produit_{{ $produit->id }}_prix" value="{{ $produit->pivot->prix_unitaire ?? 0 }}" step="0.01" required>
+                                <input type="number" class="form-control" name="qte_vte[]" 
+                                       value="{{ $produit->pivot->qte_vte }}" min="1" required>
                             </td>
                             <td>
-                                <input type="text" class="form-control w-400" name="produit_{{ $produit->id }}_remise" value="{{ $produit->pivot->remise ?? 0 }}" min="0" max="100" step="0.01" required>
+                                <input type="number" class="form-control" name="prix_unitaire[]" 
+                                       value="{{ $produit->pivot->prix_unitaire }}" min="0" step="0.01" required>
                             </td>
                             <td>
-                                <select class="form-control w-100" name="produit_{{ $produit->id }}_tva" required>
-                                    <option value="7" @if($produit->pivot->tva == '7') selected @endif>7%</option>
-                                    <option value="10" @if($produit->pivot->tva  == '10') selected @endif>10%</option>
-                                    <option value="20" @if($produit->pivot->tva  == '20') selected @endif>20%</option>
+                                <input type="number" class="form-control" name="remise[]" 
+                                       value="{{ $produit->pivot->remise }}" min="0" step="0.01">
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger" onclick="removeProduit({{ $produit->id }}, {{ $commandeClient->id }})">Supprimer</button>
-                                <input type="hidden" name="supprimer_produit[]" value="{{ $produit->id }}" id="supprimer_produit_{{ $produit->id }}-{{ $commandeClient->id }}">
+                                <select class="form-control" name="tva[]">
+                                    <option value="7" {{ $produit->pivot->tva == '7' ? 'selected' : '' }}>7%</option>
+                                    <option value="10" {{ $produit->pivot->tva == '10' ? 'selected' : '' }}>10%</option>
+                                    <option value="20" {{ $produit->pivot->tva == '20' ? 'selected' : '' }}>20%</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm removeRow">Supprimer</button>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <div class="mb-3">
-                    <button type="button" class="btn btn-success" onclick="addProduit({{ $commandeClient->id }})">Ajouter un produit</button>
-                </div>
+                <button type="button" class="btn btn-success" id="addRow">Ajouter un produit</button>
             </div>
-            {{-- bouton soumettre --}}
-            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+
+            <!-- Statut -->
+            <div class="mb-3">
+                <label for="statut" class="form-label">Statut</label>
+                <select class="form-control" id="statut" name="statut" required>
+                    @foreach (['en attente', 'expediée', 'livree', 'annulee'] as $status)
+                        <option value="{{ $status }}" {{ $commandeClient->statut == $status ? 'selected' : '' }}>
+                            {{ ucfirst($status) }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Mettre à jour la commande</button>
         </form>
     </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    // Fonction pour ajouter un produit
-    function addProduit(commandeId) {
-        // Données des produits à injecter (assurez-vous que $produits est bien passé au script)
-        const produits = @json($produits);
+    document.addEventListener('DOMContentLoaded', function() {
+        const produitsTable = document.getElementById('produitsTable');
+        const addRowBtn = document.getElementById('addRow');
 
-        // Crée les options pour la liste déroulante
-        const options = produits.map(produit => `
-            <option value="${produit.id}">${produit.designation}</option>
-        `).join('');
+        // Add new row
+        addRowBtn.addEventListener('click', function() {
+            const tbody = produitsTable.querySelector('tbody');
+            const newRow = `
+                <tr>
+                    <td>
+                        <select class="form-control produit_id" name="produit_id[]" required>
+                            <option value="">Choisir un produit</option>
+                            @foreach ($produits as $produit)
+                                <option value="{{ $produit->id }}">{{ $produit->designation }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="number" class="form-control" name="qte_vte[]" min="1" required></td>
+                    <td><input type="number" class="form-control" name="prix_unitaire[]" min="0" step="0.01" required></td>
+                    <td><input type="number" class="form-control" name="remise[]" min="0" step="0.01"></td>
+                    <td>
+                        <select class="form-control" name="tva[]">
+                            <option value="7">7%</option>
+                            <option value="10">10%</option>
+                            <option value="20">20%</option>
+                        </select>
+                    </td>
+                    <td><button type="button" class="btn btn-danger btn-sm removeRow">Supprimer</button></td>
+                </tr>
+            `;
+            tbody.insertAdjacentHTML('beforeend', newRow);
+        });
 
-        // Structure de la nouvelle ligne à ajouter
-        const newRow = `
-            <tr>
-                <td>
-                    <select class="form-control w-100" name="nouveau_produit_id[]" required>
-                        <option value="">Choisir un produit</option>
-                        ${options}
-                    </select>
-                </td>
-                <td><input type="number" class="form-control" name="nouveau_produit_qte[]" min="1" required></td>
-                <td><input type="number" class="form-control" name="nouveau_produit_prix[]" step="0.01" required></td>
-                <td><input type="number" class="form-control" name="nouveau_produit_remise[]" min="0" max="100" step="0.01" required></td>
-                <td>
-                    <select class="form-control" name="nouveau_produit_tva[]" required>
-                        <option value="7">7%</option>
-                        <option value="10">10%</option>
-                        <option value="20">20%</option>
-                    </select>
-                </td>
-                <td><button type="button" class="btn btn-danger" onclick="removeProduitTemp(this)">Supprimer</button></td>
-            </tr>
-        `;
-
-        // Ajoute la ligne au tableau
-        const produitsList = document.getElementById(`produits-list-${commandeId}`);
-        produitsList.insertAdjacentHTML('beforeend', newRow);
-    }
-
-    // Fonction pour supprimer un produit ajouté temporairement
-    function removeProduitTemp(button) {
-        const row = button.closest('tr');
-        row.remove(); // Supprime la ligne du tableau
-    }
-
-    // Fonction pour supprimer un produit existant (enregistrement logique)
-    function removeProduit(produitId, commandeId) {
-        const row = document.getElementById(`produit-${produitId}-${commandeId}`);
-        const input = document.getElementById(`supprimer_produit_${produitId}-${commandeId}`);
-        
-        if (row && input) {
-            row.style.display = 'none'; // Cache la ligne du produit
-            input.value = produitId; // Indique qu'il faut supprimer ce produit
-        }
-    }
-
-    // Expose les fonctions au contexte global pour les utiliser dans les attributs HTML
-    window.addProduit = addProduit;
-    window.removeProduitTemp = removeProduitTemp;
-    window.removeProduit = removeProduit;
-});
-
+        // Remove row
+        produitsTable.addEventListener('click', function(e) {
+            if (e.target.classList.contains('removeRow')) {
+                const tbody = produitsTable.querySelector('tbody');
+                if (tbody.children.length > 1) {
+                    e.target.closest('tr').remove();
+                } else {
+                    alert('Vous devez garder au moins un produit dans la commande.');
+                }
+            }
+        });
+    });
     </script>
-   
 </x-base>
