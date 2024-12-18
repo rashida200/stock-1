@@ -38,4 +38,18 @@ class Produit extends Model
     {
         return $this->belongsTo(Fournisseur::class);
     }
+
+    public function commandes()
+{
+    return $this->belongsToMany(CommandeClient::class, 'commande_client_produits')
+        ->withPivot([
+            'qte_vte',
+            'remise',
+            'prix_unitaire',
+            'montant_ht',
+            'tva',
+            'montant_ttc',
+        ])
+        ->withTimestamps();
+}
 }

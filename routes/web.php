@@ -6,12 +6,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BonCommandeController;
 use App\Http\Controllers\BonDeCommandeController;
+use App\Http\Controllers\BonLivraisonController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CommandeClientController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\ProduitController;
+use App\Models\BonLivraison;
 
 Route::get('/', function () {
     return redirect('/home');
@@ -53,6 +56,11 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::resource('devis', DevisController::class);
         Route::get('/devis/{id}/print', [DevisController::class, 'print'])->name('devis.print');
+
+        Route::resource('/bons-livraison', BonLivraisonController::class);
+        Route::get('/bons-livraison/{bonLivraison}/print', [BonLivraisonController::class, 'print'])->name('bons-livraison.print');
+
+        Route::resource('commandes', CommandeClientController::class);
 
 
     });

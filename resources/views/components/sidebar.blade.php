@@ -37,6 +37,16 @@
             <i class="fas fa-file-invoice me-2"></i>Devis
         </a>
     @endif
+    @if (auth()->user()->type === 'admin')
+        <a class="nav-link mb-2 rounded {{ request()->is('admin/bons-livraison*') ? 'active' : '' }}" href="{{route('bons-livraison.index')}}">
+            <i class="fas fa-file-invoice me-2"></i>Bon De Livraison
+        </a>
+    @endif
+    @if (auth()->user()->type === 'admin')
+        <a class="nav-link mb-2 rounded {{ request()->is('admin/commandes*') ? 'active' : '' }}" href="{{route('commandes.index')}}">
+            <i class="fas fa-file-invoice me-2"></i>Commandes Client
+        </a>
+    @endif
 
 
 

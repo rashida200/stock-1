@@ -8,7 +8,7 @@
 
         <div class="card">
             <div class="card-body">
-                <table class="table">
+                <table class="table table-sm text-center">
                     <thead>
                         <tr>
                             <th>N° BC</th>
@@ -16,6 +16,7 @@
                             <th>Date</th>
                             <th>Total HT</th>
                             <th>Total TTC</th>
+                            <th>Statut</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -27,7 +28,12 @@
                                 <td>{{ $bc->date_commande }}</td>
                                 <td>{{ number_format($bc->total_ht, 2) }} DH</td>
                                 <td>{{ number_format($bc->total_ttc, 2) }} DH</td>
+                                <td>{{ $bc->statut }}</td>
                                 <td>
+                                    <a href="{{ route('bons-commande.edit', $bc->id) }}" class="btn btn-sm btn-success">
+                                       modifier
+                                    </a>
+
                                     <a href="{{ route('bons-commande.print', $bc) }}" class="btn btn-sm btn-success"
                                         target="_blank">
                                         Imprimer PDF
@@ -43,6 +49,4 @@
             </div>
         </div>
     </div>
-
-
 </x-base>
