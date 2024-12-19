@@ -15,9 +15,10 @@
 </head>
 <body>
     <h1>Bon de Livraison</h1>
-    <p><strong>N° BL:</strong>{{ $bonLivraison->numero_bl }}</p>
-    <p><strong>Client:</strong>{{ $bonLivraison->client->nom }}</p>
-    <p><strong>Date de vente:</strong>{{ $bonLIvraison->date_vente }}</p>
+    <p><strong>N° BL:</strong> {{ $bonLivraison->numero_bl }}</p>
+    <p><strong>Client:</strong> {{ $bonLivraison->client->nom }}</p>
+    <p><strong>Date de Vente:</strong> {{ $bonLivraison->date_vente }}</p>
+    <p><strong>Date de Livraison:</strong> {{ $bonLivraison->date_livraison }}</p>
 
     <table>
         <thead>
@@ -32,21 +33,22 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($bonLivraison->details as $detail)
-                <tr>
-                    <td>{{ $detail->reference_produit }}</td>
-                    <td>{{ $detail->produit->designation ?? 'N/A' }}</td>
-                    <td>{{ $detail->quantite }}</td>
-                    <td>{{ number_format($detail->prix_unitaire_ht, 2) }} DH</td>
-                    <td>{{ number_format($detail->tva) }} %</td>
-                    <td>{{ number_format($detail->total_ligne_ht, 2) }}</td>
-                    <td>{{ number_format($detail->total_ligne_ttc, 2) }}</td>
-                </tr>
-            @endforeach
-        </tbody>
+    @foreach ($bonLivraison->details as $detail)
+        <tr>
+            <td>{{ $detail->produit->reference ?? 'N/A' }}</td> <!-- Corrected reference -->
+            <td>{{ $detail->produit->designation ?? 'N/A' }}</td>
+            <td>{{ $detail->quantite }}</td>
+            <td>{{ number_format($detail->prix_unitaire_ht, 2) }} DH</td>
+            <td>{{ number_format($detail->tva, 2) }} %</td>
+            <td>{{ number_format($detail->total_ligne_ht, 2) }} DH</td>
+            <td>{{ number_format($detail->total_ligne_ttc, 2) }} DH</td>
+        </tr>
+    @endforeach
+</tbody>
+
     </table>
 
-    <p class="text-right"><strong>Total HT:</strong></p>
-    <p class="text-right"><strong>Total TTC:</strong>
+    <p class="text-right"><strong>Total HT:</strong> {{ number_format($bonLivraison->total_ht, 2) }} DH</p>
+    <p class="text-right"><strong>Total TTC:</strong> {{ number_format($bonLivraison->total_ttc, 2) }} DH</p>
 </body>
 </html>

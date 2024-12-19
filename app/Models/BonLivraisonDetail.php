@@ -8,6 +8,7 @@ class BonLivraisonDetail extends Model
 {
     protected $fillable = [
         'bon_livraison_id',
+        'produit_id',
         'reference_produit',
         'quantite',
         'prix_unitaire_ht',
