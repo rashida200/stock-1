@@ -12,12 +12,12 @@ class BonLivraison extends Model
     protected $fillable = [
         'numero_bl',
         'client_id',
+        'commande_id',
         'date_vente',
         'date_livraison',
-        'statut',
         'total_ht',
         'total_ttc',
-        'status',
+        'statut',
     ];
 
     protected static function boot()
@@ -34,6 +34,11 @@ class BonLivraison extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+    
+    public function commande(): BelongsTo
+    {
+        return $this->belongsTo(CommandeClient::class);
     }
 
     public function details()

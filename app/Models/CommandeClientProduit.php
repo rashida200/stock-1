@@ -32,4 +32,8 @@ class CommandeClientProduit extends Model
                     'montant_ht', 'tva', 'montant_ttc',
                 ]);
 }
+public function produit()
+{
+    return $this->belongsTo(Produit::class, 'produit_id');
+}
 }

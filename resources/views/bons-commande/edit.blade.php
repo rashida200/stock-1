@@ -26,9 +26,9 @@
                 <div class="col">
                     <label>Statut</label>
                     <select name="statut" class="form-control">
-                        <option value="attente" {{ old('statut', $bonCommande->statut) == 'attente' ? 'selected' : '' }}>En Attente</option>
-                        <option value="valide" {{ old('statut', $bonCommande->statut) == 'valide' ? 'selected' : '' }}>Validé</option>
-                        <option value="annule" {{ old('statut', $bonCommande->statut) == 'annule' ? 'selected' : '' }}>Annulé</option>
+                        <option value="en_attente" {{ old('statut', $bonCommande->statut) == 'en_attente' ? 'selected' : '' }}>En Attente</option>
+                        <option value="validé" {{ old('statut', $bonCommande->statut) == 'validé' ? 'selected' : '' }}>Validé</option>
+                        <option value="annulé" {{ old('statut', $bonCommande->statut) == 'annulé' ? 'selected' : '' }}>Annulé</option>
                     </select>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     <div class="row mb-2 produit-ligne">
                         <div class="col">
                             <label>Produit</label>
-                            <select name="references[]" class="form-control">
+                            <select name="reference_produit[]" class="form-control">
                                 <option value="">Sélectionner un produit</option>
                                 @foreach ($produits as $produit)
                                     <option value="{{ $produit->reference }}" 
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col">
                             <label>Quantité</label>
-                            <input type="number" name="quantites[]" value="{{ $detail->quantite }}" class="form-control" />
+                            <input type="number" name="quantite[]" value="{{ $detail->quantite }}" class="form-control" />
                         </div>
                         <div class="col">
                             <label>Prix HT</label>

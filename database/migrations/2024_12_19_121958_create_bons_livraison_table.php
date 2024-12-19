@@ -14,12 +14,15 @@ return new class extends Migration
         Schema::create('bons_livraison', function (Blueprint $table) {
             $table->id();
             $table->string('numero_bl')->unique();
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
+            $table->foreignId('commande_id')->constrained('commande_clients')->onDelete('cascade');
             $table->date('date_vente');
+            $table->date('date_livraison');
             $table->decimal('total_ht', 15, 2);
             $table->decimal('total_ttc', 15, 2);
-            $table->enum('statut', ['en_attente', 'livré', 'annulé'])->default('en_attente');
+            $table->string('statut');
             $table->timestamps();
+
         });
     }
 

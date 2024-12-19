@@ -21,6 +21,11 @@ class CommandeClient extends Model
     public function client() {
         return $this->belongsTo(Client::class, 'client_id');
     }
+    
+    public function bon_livr() {
+        return $this->belongsTo(BonLivraison::class, 'bonl_id');
+    }
+
 
 
     public function produits()
@@ -36,7 +41,10 @@ class CommandeClient extends Model
         ])
         ->withTimestamps();
 }
-
+public function commandeClientProduits()
+{
+    return $this->hasMany(CommandeClientProduit::class);
+}
 // Dans le modèle
 public function formatId()
 {

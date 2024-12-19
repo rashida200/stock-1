@@ -17,10 +17,10 @@ class BonLivraisonDetail extends Model
     ];
 
     public function bonLivraison() {
-        return $this->belongsTo(BonLivraison::class);
+        return $this->belongsTo(BonLivraison::class, 'bon_livraison_id');
     }
 
     public function produit() {
-        return $this->belongsTo(Produit::class, 'reference_produit', 'reference');
+        return $this->belongsTo(Produit::class, 'produit_id');
     }
 }

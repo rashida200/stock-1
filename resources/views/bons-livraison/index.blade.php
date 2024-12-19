@@ -17,7 +17,6 @@
                             <th>Date de Livraison</th>
                             <th>Total HT</th>
                             <th>Total TTC</th>
-                            <th>Statut</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -30,7 +29,6 @@
                                 <td>{{ $bl->date_livraison }}</td>
                                 <td>{{ number_format($bl->total_ht, 2) }} DH</td>
                                 <td>{{ number_format($bl->total_ttc, 2) }} DH</td>
-                                <td>{{ $bl->statut }}</td>
                                 <td>
                                     <a href="{{ route('bons-livraison.edit', $bl->id) }}" class="btn btn-sm btn-success">
                                         <i class="fas fa-edit"></i> Modifier

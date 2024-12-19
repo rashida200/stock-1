@@ -19,6 +19,7 @@ class Client extends Model
     {
         return $this->hasMany(CommandeClient::class);
     }
+    
 }
 
 

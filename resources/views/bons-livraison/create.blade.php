@@ -1,163 +1,116 @@
 <x-base>
-
-    <div class="container">
-        <h1>Nouveau Bon de Livraison</h1>
-
-        <form action="{{ route('bons-livraison.store') }}" method="POST" id="bonLivraisonForm">
-            @csrf
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mb-4">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Client</label>
-                                <select name="client_id" class="form-control @error('client_id') is-invalid @enderror" required>
-                                    <option value="">Sélectionner un client</option>
-                                    @foreach($clients as $client)
-                                        <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
-                                            {{ $client->nom }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('client_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Date de Vente</label>
-                                <input type="date" name="date_vente" class="form-control @error('date_vente') is-invalid @enderror"
-                                       value="{{ old('date_vente', date('Y-m-d')) }}" required>
-                                @error('date_vente')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Date de Livraison</label>
-                                <input type="date" name="date_livraison" class="form-control @error('date_livraison') is-invalid @enderror"
-                                       value="{{ old('date_livraison') }}" required>
-                                @error('date_livraison')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="statut">Statut</label>
-                            <select class="form-control" name="statut" id="statut" required>
-                                <option value="en_attente" {{ old('statut') == 'en_attente' ? 'selected' : '' }}>En Attente</option>
-                                <option value="livré" {{ old('statut') == 'livré' ? 'selected' : '' }}>Livré</option>
-                                <option value="annulé" {{ old('statut') == 'annulé' ? 'selected' : '' }}>Annulée</option>
-                            </select>
-                        </div>
-                        
-                    </div>
-
-                    <h3>Produits</h3>
-                    <div id="produits-container">
-                        <div class="produit-ligne mb-3">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Produit</label>
-                                        <select name="references[]" class="form-control" required>
-                                            <option value="">Sélectionner un produit</option>
-                                            @foreach($produits as $produit)
-                                                <option value="{{ $produit->reference }}">
-                                                    {{ $produit->reference }} - {{ $produit->designation }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label>Quantité</label>
-                                        <input type="number" name="quantites[]" class="form-control" required min="1">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label>Prix unitaire HT</label>
-                                        <input type="number" step="0.01" name="prix_unitaire_ht[]" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label>TVA (%)</label>
-                                        <select name="tva[]" class="form-control" required>
-                                            <option value="choisie">Choisir une valeur de TVA</option>
-                                            <option value="7">7%</option>
-                                            <option value="10">10%</option>
-                                            <option value="20">20%</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label class="d-block">&nbsp;</label>
-                                        <button type="button" class="btn btn-sm btn-danger btn-supprimer-produit">
-                                            <i class="fas fa-trash"></i>Supprimer
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <button type="button" class="btn btn-secondary" id="btn-ajouter-produit">
-                            <i class="fas fa-plus"></i> Ajouter un produit
-                        </button>
-                    </div>
-
-                    <div class="mt-4">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> Enregistrer le bon de livraison
-                        </button>
-                    </div>
-                </div>
+    <form action="{{ route('bons-livraison.store') }}" method="POST" class="container mt-4">
+        @csrf
+    
+        <!-- Commandes -->
+        <div class="form-group">
+            <label for="commandes">Commandes:</label>
+            <select name="commande_id" id="commandes" class="form-control" onchange="fillInputs()">
+                <option value="">-- Sélectionnez une commande --</option>
+                @foreach ($commandes as $commande)
+                    <option 
+                        value="{{ $commande->id }}" 
+                        data-client-id="{{ $commande->client->id }}" 
+                        data-client-nom="{{ $commande->client->nom }}" 
+                        data-client-telephone="{{ $commande->client->telephone }}" 
+                        data-date-commande="{{ $commande->date_commande }}"
+                        data-produits="{{ json_encode($commande->commandeClientProduits) }}">
+                        {{ $commande->id }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    
+        <!-- Commande details (Client Info) -->
+        <div id="commande-details" class="mt-4">
+            <div class="form-group">
+                <label for="client_id">Client ID:</label>
+                <input type="text" id="client_id" name="client_id" class="form-control" readonly>
             </div>
-        </form>
-    </div>
-
-    @push('scripts')
+            <div class="form-group">
+                <label for="client_nom">Nom du Client:</label>
+                <input type="text" id="client_nom" name="client_nom" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+                <label for="client_telephone">Téléphone:</label>
+                <input type="text" id="client_telephone" name="client_telephone" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+                <label for="date_commande">Date de Commande:</label>
+                <input type="text" id="date_commande" name="date_vente" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+                <label for="date_livraison">Date de livraison:</label>
+                <input type="date" id="date_livraison" name="date_livraison" class="form-control" value="{{ old('date_commande', date('Y-m-d')) }}">
+            </div>
+        </div>
+    
+        <!-- Produit details -->
+        <div id="produit-details" class="mt-4">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Référence Produit</th>
+                        <th>Désignation Produit</th>
+                        <th>Quantité Vente</th>
+                        <th>Remise</th>
+                        <th>Prix Unitaire</th>
+                        <th>Montant HT</th>
+                        <th>TVA</th>
+                        <th>Montant TTC</th>
+                    </tr>
+                </thead>
+                <tbody id="produit-rows"></tbody>
+            </table>
+        </div>
+    
+        <!-- Champ caché pour envoyer les produits -->
+        <input type="hidden" id="produits" name="produits">
+    
+        <button type="submit" class="btn btn-primary mt-4">Soumettre</button>
+    </form>
+    
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const produitsContainer = document.getElementById('produits-container');
-        const btnAjouterProduit = document.getElementById('btn-ajouter-produit');
-
-        // Add product line
-        btnAjouterProduit.addEventListener('click', () => {
-            const ligne = produitsContainer.querySelector('.produit-ligne').cloneNode(true);
-
-            // Reset fields in the cloned line
-            ligne.querySelectorAll('input, select').forEach(input => input.value = '');
-
-            // Add delete handler to the cloned line
-            addDeleteHandler(ligne);
-
-            produitsContainer.appendChild(ligne);
-        });
-
-        // Add delete handler to existing and new lines
-        function addDeleteHandler(ligne) {
-            const deleteBtn = ligne.querySelector('.btn-supprimer-produit');
-            deleteBtn.addEventListener('click', () => {
-                if (produitsContainer.querySelectorAll('.produit-ligne').length > 1) {
-                    ligne.remove();
-                } else {
-                    alert('Vous devez avoir au moins une ligne de produit.');
-                }
+        function fillInputs() {
+            const select = document.getElementById('commandes');
+            const selectedOption = select.options[select.selectedIndex];
+    
+            // Récupérer les données de l'option sélectionnée
+            const clientId = selectedOption.getAttribute('data-client-id');
+            const clientNom = selectedOption.getAttribute('data-client-nom');
+            const clientTelephone = selectedOption.getAttribute('data-client-telephone');
+            const dateCommande = selectedOption.getAttribute('data-date-commande');
+            const produitsData = JSON.parse(selectedOption.getAttribute('data-produits'));
+    
+            // Remplir les champs client
+            document.getElementById('client_id').value = clientId;
+            document.getElementById('client_nom').value = clientNom;
+            document.getElementById('client_telephone').value = clientTelephone;
+            document.getElementById('date_commande').value = dateCommande;
+    
+            // Remplir le tableau des produits - Dynamique en fonction des produits associés à la commande
+            let produitRowsHtml = '';
+            produitsData.forEach(produit => {
+                produitRowsHtml += `
+                    <tr>
+                        <td>${produit.produit.reference}</td>
+                        <td>${produit.produit.designation}</td>
+                        <td>${produit.qte_vte t}</td>
+                        <td>${produit.remise}</td>
+                        <td>${produit.prix_unitaire}</td>
+                        <td>${produit.montant_ht}</td>
+                        <td>${produit.tva}</td>
+                        <td>${produit.montant_ttc}</td>
+                    </tr>
+                `;
             });
+    
+            // Injecter les lignes des produits dans le tableau
+            document.getElementById('produit-rows').innerHTML = produitRowsHtml;
+    
+            // Remplir le champ caché 'produits' avec les produits
+            document.getElementById('produits').value = JSON.stringify(produitsData);
         }
-
-        // Apply delete handler to the initial product line
-        produitsContainer.querySelectorAll('.produit-ligne').forEach(addDeleteHandler);
-    });
     </script>
-    @endpush
-
+    
 </x-base>
