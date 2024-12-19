@@ -22,7 +22,7 @@ class BonLivraisonController extends Controller
         return view('bons-livraison.index', compact('bonsLivraison'));
     }
 
-    
+
     public function create()
     {
         $clients = Client::all();
@@ -32,81 +32,120 @@ class BonLivraisonController extends Controller
         return view('bons-livraison.create', compact('clients', 'produits', 'commandes'));
     }
 
+//     public function store(Request $request)
+// {
+//     // Valider les données entrantes
+//     $validatedData = $request->validate([
+//         'commande_id' => 'required|integer',
+//         'client_id' => 'required|integer',
+//         'client_nom' => 'required|string',
+//         'client_telephone' => 'required|string',
+//         'date_vente' => 'required|date',
+//         'date_livraison' => 'required|date',
+//         'produits' => 'required|json',
+//     ]);
 
+//     // Décoder les produits
+//     $produits = json_decode($validatedData['produits'], true);
+
+//     // Vérifier que les produits sont valides
+//     if (!is_array($produits)) {
+//         return response()->json(['error' => 'Les produits doivent être un tableau JSON valide.'], 400);
+//     }
+
+//     // Calculer total_ht et total_ttc
+//     $total_ht = 0;
+//     $total_ttc = 0;
+//     foreach ($produits as $produit) {
+//         $total_ht += $produit['total_ligne_ht'];
+//         $total_ttc += $produit['total_ligne_ttc'];
+//     }
+
+//     // Créer le bon de livraison avec total_ht et total_ttc calculés
+//     $bonLivraison = BonLivraison::create([
+//         'commande_id' => $validatedData['commande_id'],
+//         'client_id' => $validatedData['client_id'],
+//         'client_nom' => $validatedData['client_nom'],
+//         'client_telephone' => $validatedData['client_telephone'],
+//         'date_vente' => $validatedData['date_vente'],
+//         'date_livraison' => $validatedData['date_livraison'],
+//         'total_ht' => $total_ht,
+//         'total_ttc' => $total_ttc,
+//     ]);
+
+//     // Insérer les détails des produits
+//     foreach ($produits as $produit) {
+//         BonLivraisonDetail::create([
+//             'bon_livraison_id' => $bonLivraison->id, // Associer au bon de livraison créé
+//             'produit_id' => $produit['produit_id'],
+//             'quantite' => $produit['quantite'],
+//             'prix_unitaire_ht' => $produit['prix_unitaire_ht'],
+//             'total_ligne_ht' => $produit['total_ligne_ht'],
+//             'tva' => $produit['tva'],
+//             'total_ligne_ttc' => $produit['total_ligne_ttc'],
+//         ]);
+//     }
+
+//     return response()->json(['message' => 'Bon de livraison et détails ajoutés avec succès !'], 201);
+// }
 public function store(Request $request)
 {
-    // Pour examiner les données envoyées avant de valider
-    dd($request->all());
-    // Valider la requête entrante
-    $request->validate([
-        'commande_id' => 'required|exists:commande_clients,id',
+    // Valider les données entrantes
+    $validatedData = $request->validate([
+        'commande_id' => 'required|integer',
+        'client_id' => 'required|integer',
+        'client_nom' => 'required|string',
+        'client_telephone' => 'required|string',
+        'date_vente' => 'required|date',
         'date_livraison' => 'required|date',
-        'produits' => 'required|array',  // Validation des produits envoyés
-        'produits.*.produit_id' => 'required|exists:produits,id',  // Valider que chaque produit existe
-        'produits.*.quantite' => 'required|integer|min:1',  // Validation de la quantité
-        'produits.*.prix_unitaire_ht' => 'required|numeric|min:0',  // Validation du prix unitaire
-        'produits.*.tva' => 'required|in:7,10,20',  // Validation de la TVA
-        'produits.*.total_ligne_ht' => 'required|numeric|min:0',  // Validation du montant HT
-        'produits.*.total_ligne_ttc' => 'required|numeric|min:0',  // Validation du montant TTC
+        'produits' => 'required|json',
     ]);
 
-    // Récupérer la commande avec ses produits associés
-    $commande = CommandeClient::with('commandeClientProduits.produit')->findOrFail($request->commande_id);
+    // Décoder les produits
+    $produits = json_decode($validatedData['produits'], true);
 
-    // Générer un numéro de bon de livraison unique (Numéro BL)
-    $numeroBl = Str::random(10);  // Ou une autre méthode pour générer un numéro unique
-
-    // Créer le Bon de Livraison
-    $bonLivraison = BonLivraison::create([
-        'numero_bl' => $numeroBl,
-        'client_id' => $commande->client_id,
-        'commande_id' => $commande->id,
-        'date_vente' => $commande->date_commande,
-        'date_livraison' => $request->date_livraison,
-        'total_ht' => 0, // Les totaux seront calculés après l'insertion des produits
-        'total_ttc' => 0,
-        'statut' => 'pending', // Ou en fonction de ta logique de statut
-    ]);
-
-    // Initialiser les totaux
-    $totalHt = 0;
-    $totalTtc = 0;
-
-    // Insérer les détails du Bon de Livraison pour chaque produit dans le tableau 'produits' du formulaire
-    foreach ($request->produits as $produit) {
-        // Récupérer les informations du produit depuis le formulaire
-        //$produitId = $produit->id;
-        $quantite = $produit['quantite'];
-        $prixUnitaireHt = $produit['prix_unitaire_ht'];
-        $tva = $produit['tva'];
-        $totalLigneHt = $produit['total_ligne_ht'];
-        $totalLigneTtc = $produit['total_ligne_ttc'];
-
-        // Insérer les détails du produit dans la table bon_livraison_details
-        BonLivraisonDetail::create([
-            'bon_livraison_id' => $bonLivraison->id,
-            //'produit_id' => $produitId, // Passer le bon produit_id
-            'quantite' => $quantite,
-            'prix_unitaire_ht' => $prixUnitaireHt,
-            'tva' => $tva,
-            'total_ligne_ht' => $totalLigneHt,
-            'total_ligne_ttc' => $totalLigneTtc,
-        ]);
-
-        // Accumuler les totaux HT et TTC
-        $totalHt += $totalLigneHt;
-        $totalTtc += $totalLigneTtc;
+    // Vérifier que les produits sont valides
+    if (!is_array($produits)) {
+        return response()->json(['error' => 'Les produits doivent être un tableau JSON valide.'], 400);
     }
 
-    // Mettre à jour les totaux du Bon de Livraison
-    $bonLivraison->update([
-        'total_ht' => $totalHt,
-        'total_ttc' => $totalTtc,
+    // Calculer total_ht et total_ttc
+    $total_ht = 0;
+    $total_ttc = 0;
+    foreach ($produits as $produit) {
+        $total_ht += $produit['total_ligne_ht'];
+        $total_ttc += $produit['total_ligne_ttc'];
+    }
+
+    // Créer le bon de livraison avec total_ht, total_ttc, et statut
+    $bonLivraison = BonLivraison::create([
+        'commande_id' => $validatedData['commande_id'],
+        'client_id' => $validatedData['client_id'],
+        'client_nom' => $validatedData['client_nom'],
+        'client_telephone' => $validatedData['client_telephone'],
+        'date_vente' => $validatedData['date_vente'],
+        'date_livraison' => $validatedData['date_livraison'],
+        'total_ht' => $total_ht,
+        'total_ttc' => $total_ttc,
+        'statut' => 'expidée',  // Valeur par défaut pour statut
     ]);
 
-    // Rediriger avec un message de succès
-    return redirect()->route('bons-livraison.index')->with('success', 'Bon de livraison créé avec succès');
+    // Insérer les détails des produits
+    foreach ($produits as $produit) {
+        BonLivraisonDetail::create([
+            'bon_livraison_id' => $bonLivraison->id, // Associer au bon de livraison créé
+            'produit_id' => $produit['produit_id'],
+            'quantite' => $produit['quantite'],
+            'prix_unitaire_ht' => $produit['prix_unitaire_ht'],
+            'total_ligne_ht' => $produit['total_ligne_ht'],
+            'tva' => $produit['tva'],
+            'total_ligne_ttc' => $produit['total_ligne_ttc'],
+        ]);
+    }
+
+    return response()->json(['message' => 'Bon de livraison et détails ajoutés avec succès !'], 201);
 }
+
 
 
 
