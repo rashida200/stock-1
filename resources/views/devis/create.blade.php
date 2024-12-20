@@ -29,13 +29,13 @@
                             <select name="references[]" class="form-control me-2" required>
                                 <option value="">Sélectionner un produit</option>
                                 @foreach($produits as $produit)
-                                    <option value="{{ $produit->reference }}">{{ $produit->reference }} - {{ $produit->designation }}</option>
+                                    <option value="{{ $produit->id }}">{{ $produit->reference }} - {{ $produit->designation }}</option>
                                 @endforeach
                             </select>
                             <input type="number" name="quantites[]" class="form-control me-2" placeholder="Quantité" required min="1">
                             <input type="number" step="0.01" name="prix_unitaire_ht[]" class="form-control me-2" placeholder="Prix Unitaire HT" required>
                             <select name="tva[]" class="form-control me-2" required>
-                                <option value="2">2%</option>
+                                <option value="7">7%</option>
                                 <option value="10">10%</option>
                                 <option value="20">20%</option>
                             </select>

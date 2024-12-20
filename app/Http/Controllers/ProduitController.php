@@ -44,6 +44,7 @@ class ProduitController extends Controller
             'reference' => 'required|unique:produits,reference',
             'designation' => 'required|string|max:255',
             'quantity' => 'required|integer|min:1',
+            'quantite_initial' => 'required|integer|min:1',
             'prix_achat_ht' => 'required|numeric|min:0',
             'tva' => 'required|numeric|min:0',
             'prix_vente' => 'required|numeric|min:0',
@@ -55,6 +56,7 @@ class ProduitController extends Controller
         $produit->reference = $request->reference;
         $produit->designation = $request->designation;
         $produit->quantity = $request->quantity;
+        $produit->quantite_initial = $request->quantite_initial;
         $produit->prix_achat_ht = $request->prix_achat_ht;
         $produit->tva = $request->tva;
         $produit->prix_vente = $request->prix_vente;
@@ -92,6 +94,7 @@ class ProduitController extends Controller
             'reference' => 'required|unique:produits,reference,' . $id, // Prevent duplicate references
             'designation' => 'required|string|max:255',
             'quantity' => 'required|integer|min:1',
+            'quantite_initial' => 'required|integer|min:1',
             'prix_achat_ht' => 'required|numeric|min:0',
             'tva' => 'required|numeric|min:0',
             'prix_vente' => 'required|numeric|min:0',
@@ -105,6 +108,7 @@ class ProduitController extends Controller
             'reference' => $request->reference,
             'designation' => $request->designation,
             'quantity' => $request->quantity,
+            'quantite_initial' => $request->quantite_initial,
             'prix_achat_ht' => $request->prix_achat_ht,
             'tva' => $request->tva,
             'prix_vente' => $request->prix_vente,

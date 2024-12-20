@@ -53,63 +53,72 @@ class CommandeClientController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
-{
-    $validated = $request->validate([
-        'client_id' => 'required|exists:clients,id',
-        'date_commande' => 'required|date',
-        'reglement' => 'required|in:Espèce,Chèque,LCTraite,Virement,Prélèvement,En Compte,Délégation de créance',
-        'produit_id' => 'required|array|min:1',
-        'produit_id.*' => 'required|exists:produits,id',
-        'qte_vte' => 'required|array|min:1',
-        'qte_vte.*' => 'required|integer|min:1',
-        'prix_unitaire' => 'required|array|min:1',
-        'prix_unitaire.*' => 'required|numeric|min:0',
-        'tva' => 'nullable|array',
-        'tva.*' => 'nullable|numeric|min:0',
-        'remise' => 'nullable|array',
-        'remise.*' => 'nullable|numeric|min:0',
-        'statut' => 'required|string|in:en attente,expediée,livree,annulee',
-    ]);
+     public function store(Request $request)
+     {
+         $validated = $request->validate([
+             'client_id' => 'required|exists:clients,id',
+             'date_commande' => 'required|date',
+             'reglement' => 'required|in:Espèce,Chèque,LCTraite,Virement,Prélèvement,En Compte,Délégation de créance',
+             'produit_id' => 'required|array|min:1',
+             'produit_id.*' => 'required|exists:produits,id',
+             'qte_vte' => 'required|array|min:1',
+             'qte_vte.*' => 'required|integer|min:1',
+             'prix_unitaire' => 'required|array|min:1',
+             'prix_unitaire.*' => 'required|numeric|min:0',
+             'tva' => 'nullable|array',
+             'tva.*' => 'nullable|numeric|min:0',
+             'remise' => 'nullable|array',
+             'remise.*' => 'nullable|numeric|min:0',
+             'statut' => 'required|string|in:en attente,expediée,livree,annulee',
+         ]);
 
-    $commande = CommandeClient::create([
-        'client_id' => $validated['client_id'],
-        'date_commande' => $validated['date_commande'],
-        'reglement' => $validated['reglement'],
-        'ref_regl' => $request->ref_regl ?? null,
-        'statut' => $validated['statut'],
-    ]);
+         $commande = CommandeClient::create([
+             'client_id' => $validated['client_id'],
+             'date_commande' => $validated['date_commande'],
+             'reglement' => $validated['reglement'],
+             'ref_regl' => $request->ref_regl ?? null,
+             'statut' => $validated['statut'],
+         ]);
 
-    $montantTotalCommande = 0;
+         $montantTotalCommande = 0;
 
-    foreach ($validated['produit_id'] as $index => $produitId) {
-        $prixUnitaire = $validated['prix_unitaire'][$index];
-        $quantite = $validated['qte_vte'][$index];
-        $tva = $validated['tva'][$index] ?? 0;
-        $remise = $validated['remise'][$index] ?? 0;
+         foreach ($validated['produit_id'] as $index => $produitId) {
+             $prixUnitaire = $validated['prix_unitaire'][$index];
+             $quantite = $validated['qte_vte'][$index];
+             $tva = $validated['tva'][$index] ?? 0;
+             $remise = $validated['remise'][$index] ?? 0;
 
-        $montantHt = $prixUnitaire * $quantite;
-        $montantRemise = $montantHt * ($remise / 100);
-        $montantHtRemise = $montantHt - $montantRemise;
-        $montantTtc = $montantHtRemise * (1 + ($tva / 100));
+             $montantHt = $prixUnitaire * $quantite;
+             $montantRemise = $montantHt * ($remise / 100);
+             $montantHtRemise = $montantHt - $montantRemise;
+             $montantTtc = $montantHtRemise * (1 + ($tva / 100));
 
-        $montantTotalCommande += $montantTtc;
+             $montantTotalCommande += $montantTtc;
 
-        $commande->produits()->attach($produitId, [
-            'qte_vte' => $quantite,
-            'prix_unitaire' => $prixUnitaire,
-            'remise' => $remise,
-            'tva' => $tva,
-            'montant_ht' => $montantHtRemise, // Ajout après remise
-            'montant_ttc' => $montantTtc,
-        ]);
-    }
+             // Récupérer le produit pour mettre à jour la quantité
+             $produit = Produit::findOrFail($produitId);
+             if ($produit->quantity < $quantite) {
+                 return redirect()->back()->withErrors("La quantité disponible pour le produit {$produit->name} est insuffisante.");
+             }
 
-    $commande->montant_total = $montantTotalCommande;
-    $commande->save();
+             $produit->quantity -= $quantite;
+             $produit->save();
 
-    return redirect()->route('commandes.index')->with('success', 'La commande a été créée avec succès !');
-}
+             $commande->produits()->attach($produitId, [
+                 'qte_vte' => $quantite,
+                 'prix_unitaire' => $prixUnitaire,
+                 'remise' => $remise,
+                 'tva' => $tva,
+                 'montant_ht' => $montantHtRemise, // Ajout après remise
+                 'montant_ttc' => $montantTtc,
+             ]);
+         }
+
+         $commande->montant_total = $montantTotalCommande;
+         $commande->save();
+
+         return redirect()->route('commandes.index')->with('success', 'La commande a été créée avec succès et les stocks ont été mis à jour !');
+     }
 
 
 
@@ -147,15 +156,15 @@ public function show($id)
         ->get();
 
     // Calcul du montant total
-    
-    
-   
+
+
+
     // Return view with the updated total
     return view('commandes.show', [
         'commande' => $commande,
         'produits' => $produits,
     ]);
-   
+
 }
 
 
@@ -164,13 +173,81 @@ public function show($id)
         $commandeClient = CommandeClient::findOrFail($id);
         $clients = Client::all();
         $produits = Produit::all();
-    
+
         return view('commandes.edit', compact('commandeClient', 'clients', 'produits'));
     }
 
-    
 
-    public function update(Request $request, CommandeClient $commande)
+
+//     public function update(Request $request, CommandeClient $commande)
+// {
+//     // Validate the request data
+//     $validated = $request->validate([
+//         'client_id' => 'required|exists:clients,id',
+//         'date_commande' => 'required|date',
+//         'reglement' => 'required|in:Espèce,Chèque,LCTraite,Virement,Prélèvement,En Compte,Délégation de créance',
+//         'produit_id' => 'required|array|min:1',
+//         'produit_id.*' => 'required|exists:produits,id',
+//         'qte_vte' => 'required|array|min:1',
+//         'qte_vte.*' => 'required|integer|min:1',
+//         'prix_unitaire' => 'required|array|min:1',
+//         'prix_unitaire.*' => 'required|numeric|min:0',
+//         'tva' => 'nullable|array',
+//         'tva.*' => 'nullable|numeric|min:0',
+//         'remise' => 'nullable|array',
+//         'remise.*' => 'nullable|numeric|min:0',
+//         'statut' => 'required|string|in:en attente,expediée,livree,annulee',
+//     ]);
+
+//     // Update main order information
+//     $commande->update([
+//         'client_id' => $validated['client_id'],
+//         'date_commande' => $validated['date_commande'],
+//         'reglement' => $validated['reglement'],
+//         'ref_regl' => $request->ref_regl ?? null,
+//         'statut' => $validated['statut'],
+//     ]);
+
+//     // Reset total amount
+//     $montantTotalCommande = 0;
+
+//     // Synchronize products
+//     $productData = [];
+//     foreach ($validated['produit_id'] as $index => $produitId) {
+//         $prixUnitaire = $validated['prix_unitaire'][$index];
+//         $quantite = $validated['qte_vte'][$index];
+//         $tva = $validated['tva'][$index] ?? 0;
+//         $remise = $validated['remise'][$index] ?? 0;
+
+//         // Calculate pricing
+//         $montantHt = $prixUnitaire * $quantite;
+//         $montantRemise = $montantHt * ($remise / 100);
+//         $montantHtRemise = $montantHt - $montantRemise;
+//         $montantTtc = $montantHtRemise * (1 + ($tva / 100));
+
+//         // Accumulate total amount
+//         $montantTotalCommande += $montantTtc;
+
+//         // Prepare product data for synchronization
+//         $productData[$produitId] = [
+//             'qte_vte' => $quantite,
+//             'prix_unitaire' => $prixUnitaire,
+//             'remise' => $remise,
+//             'tva' => $tva,
+//             'montant_ht' => $montantHtRemise,
+//             'montant_ttc' => $montantTtc,
+//         ];
+//     }
+
+//     // Update pivot table with new product data
+//     $commande->produits()->sync($productData);
+
+//     // Update total amount for the order
+//     $commande->update(['montant_total' => $montantTotalCommande]);
+
+//     return redirect()->route('commandes.index')->with('success', 'Commande mise à jour avec succès!');
+// }
+public function update(Request $request, CommandeClient $commande)
 {
     // Validate the request data
     $validated = $request->validate([
@@ -202,6 +279,9 @@ public function show($id)
     // Reset total amount
     $montantTotalCommande = 0;
 
+    // Retrieve current product quantities in the order
+    $currentProducts = $commande->produits()->pluck('qte_vte', 'produit_id');
+
     // Synchronize products
     $productData = [];
     foreach ($validated['produit_id'] as $index => $produitId) {
@@ -218,6 +298,18 @@ public function show($id)
 
         // Accumulate total amount
         $montantTotalCommande += $montantTtc;
+
+        // Adjust stock based on the difference in quantities
+        $produit = Produit::findOrFail($produitId);
+        $oldQuantity = $currentProducts[$produitId] ?? 0;
+        $quantityDifference = $quantite - $oldQuantity;
+
+        if ($produit->quantity < $quantityDifference) {
+            return redirect()->back()->withErrors("La quantité disponible pour le produit {$produit->name} est insuffisante.");
+        }
+
+        $produit->quantity -= $quantityDifference;
+        $produit->save();
 
         // Prepare product data for synchronization
         $productData[$produitId] = [
@@ -236,8 +328,9 @@ public function show($id)
     // Update total amount for the order
     $commande->update(['montant_total' => $montantTotalCommande]);
 
-    return redirect()->route('commandes.index')->with('success', 'Commande mise à jour avec succès!');
+    return redirect()->route('commandes.index')->with('success', 'Commande mise à jour avec succès et les stocks ont été ajustés !');
 }
+
 
 
 

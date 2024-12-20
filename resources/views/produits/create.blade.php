@@ -39,7 +39,12 @@
                         <input type="number" class="form-control" id="quantity" name="quantity" min="1"
                             required>
                     </div>
-
+                     <!-- Quantity Intial field -->
+                    <div class="mb-3">
+                        <label for="quantite_initial" class="form-label">Quantité Initial</label>
+                        <input type="number" class="form-control" id="quantite_initial" name="quantite_initial" min="1"
+                            required>
+                    </div>
                     <!-- Prix d'Achat HT Field -->
                     <div class="mb-3">
                         <label for="prix_achat_ht" class="form-label">Prix d'achat HT</label>

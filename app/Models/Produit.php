@@ -14,6 +14,7 @@ class Produit extends Model
         'reference',
         'designation',
         'quantity',
+        'quantite_initial',
         'prix_achat_ht',
         'tva',
         'prix_achat_ttc',

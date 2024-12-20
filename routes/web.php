@@ -14,6 +14,8 @@ use App\Http\Controllers\CommandeClientController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\StockController;
+use App\Models\Produit;
 use App\Models\BonLivraison;
 
 Route::get('/', function () {
@@ -61,6 +63,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/bons-livraison/{bonLivraison}/print', [BonLivraisonController::class, 'print'])->name('bons-livraison.print');
 
         Route::resource('commandes', CommandeClientController::class);
+
+        Route::resource('stock', StockController::class);
+
 
 
     });

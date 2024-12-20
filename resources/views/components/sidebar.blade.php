@@ -47,6 +47,13 @@
             <i class="fas fa-file-invoice me-2"></i>Commandes Client
         </a>
     @endif
+    @if (auth()->user()->type === 'admin')
+    <a class="nav-link mb-2 rounded {{ request()->is('admin/stock*') ? 'active' : '' }}"
+        href="{{ route('stock.index') }}">
+        <i class="fas fa-warehouse me-2"></i>Stock
+    </a>
+@endif
+
 
 
 

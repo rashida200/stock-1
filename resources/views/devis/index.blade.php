@@ -29,6 +29,10 @@
                                 <td>{{ number_format($devi->total_ht, 2) }} DH</td>
                                 <td>{{ number_format($devi->total_ttc, 2) }} DH</td>
                                 <td>
+                                    <a href="{{ route('devis.edit', $devi->id) }}" class="btn btn-sm btn-success">
+                                        Modifier
+                                    </a>
+
                                     <a href="{{ route('devis.print', $devi->id) }}" class="btn btn-sm btn-success"
                                         target="_blank">
                                         Imprimer PDF

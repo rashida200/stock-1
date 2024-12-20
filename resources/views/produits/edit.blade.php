@@ -27,6 +27,11 @@
                         <label for="quantity" class="form-label">Quantité</label>
                         <input type="number" class="form-control" id="quantity" name="quantity" value="{{ $produit->quantity }}" min="1" required>
                     </div>
+                    <!-- Quantity Field -->
+                    <div class="mb-3">
+                        <label for="quantite_initial" class="form-label">Quantité Initial</label>
+                        <input type="number" class="form-control" id="quantite_initial" name="quantite_initial" value="{{ $produit->quantite_initial }}" min="1" required>
+                    </div>
 
                     <!-- Prix d'Achat HT Field -->
                     <div class="mb-3">

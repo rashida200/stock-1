@@ -22,7 +22,8 @@
                 <tr>
                     <th scope="col">Reference</th>
                     <th scope="col">Designation</th>
-                    <th scope="col">quantity</th>
+                    <th scope="col">quantité</th>
+                    <th scope="col">quantité initial</th>
                     <th scope="col">Prix d'achat</th>
                     <th scope="col">tva</th>
                     <th scope="col">Prix d'achat TTC</th>
@@ -44,6 +45,7 @@
                             <td>{{ $produit->reference }}</td>
                             <td>{{ $produit->designation }}</td>
                             <td>{{ $produit->quantity }}</td>
+                            <td>{{ $produit->quantite_initial }}</td>
                             <td>{{ $produit->prix_achat_ht }}</td>
                             <td>{{ $produit->tva }}</td>
                             <td>{{ $produit->prix_achat_ttc }}</td>
@@ -57,10 +59,6 @@
                                     <button class="btn btn-success btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editModal-{{ $produit->id }}">
                                         <i class="fas fa-edit"></i>
-                                    </button>
-
-                                    <button class="btn btn-primary btn-sm" title="Historique">
-                                        <i class="fas fa-history"></i>
                                     </button>
                                     <form action="{{ route('produits.destroy', $produit->id) }}" method="POST"
                                         onsubmit="return confirm('Are you sure you want to delete this Produit?')">

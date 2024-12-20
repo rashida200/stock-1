@@ -65,27 +65,23 @@
                 <td>{{ $detail->produit->reference }}</td>
                 <td>{{ $detail->produit->designation }}</td>
                 <td class="text-right">{{ $detail->quantite }}</td>
-                <td class="text-right">{{ number_format($detail->prix_unitaire_ht, 2, ',', ' ') }} €</td>
+                <td class="text-right">{{ number_format($detail->prix_unitaire_ht, 2, ',', ' ') }} DH</td>
                 <td class="text-right">{{ $detail->tva }}%</td>
-                <td class="text-right">{{ number_format($detail->total_ligne_ht, 2, ',', ' ') }} €</td>
-                <td class="text-right">{{ number_format($detail->total_ligne_ttc, 2, ',', ' ') }} €</td>
+                <td class="text-right">{{ number_format($detail->total_ligne_ht, 2, ',', ' ') }} DH</td>
+                <td class="text-right">{{ number_format($detail->total_ligne_ttc, 2, ',', ' ') }} DH</td>
             </tr>
             @endforeach
         </tbody>
         <tfoot>
             <tr>
                 <th colspan="5" class="text-right">Total HT</th>
-                <td colspan="2" class="text-right">{{ number_format($totalHt, 2, ',', ' ') }} €</td>
+                <td colspan="2" class="text-right">{{ number_format($totalHt, 2, ',', ' ') }} DH</td>
             </tr>
             <tr>
                 <th colspan="5" class="text-right">Total TTC</th>
-                <td colspan="2" class="text-right">{{ number_format($totalTtc, 2, ',', ' ') }} €</td>
+                <td colspan="2" class="text-right">{{ number_format($totalTtc, 2, ',', ' ') }} DH</td>
             </tr>
         </tfoot>
     </table>
-
-    <div class="footer">
-        <p>Conditions de paiement : 30 jours</p>
-    </div>
 </body>
 </html>

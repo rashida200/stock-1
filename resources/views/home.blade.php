@@ -1,1 +1,2 @@
-<x-base></x-base>
+<x-base>
+</x-base>
