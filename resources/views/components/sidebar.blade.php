@@ -52,13 +52,13 @@
         href="{{ route('stock.index') }}">
         <i class="fas fa-warehouse me-2"></i>Stock
     </a>
-@endif
+    @endif
     @if (auth()->user()->type === 'admin')
     <a class="nav-link mb-2 rounded {{ request()->is('admin/factures*') ? 'active' : '' }}"
         href="{{ route('factures.index') }}">
         <i class="fas fa-warehouse me-2"></i>Facture
     </a>
-@endif
+    @endif
 
 
 
