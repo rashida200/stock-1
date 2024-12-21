@@ -12,6 +12,7 @@ use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommandeClientController;
 use App\Http\Controllers\DevisController;
+use App\Http\Controllers\FactureController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\StockController;
@@ -67,7 +68,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('stock', StockController::class);
 
 
-
+        Route::resource('factures', FactureController::class);
+        Route::get('/factures/{facture}/print', [FactureController::class, 'print'])->name('factures.print');
     });
 
     // Manager routes

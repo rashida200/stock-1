@@ -35,14 +35,18 @@ class BonLivraison extends Model
     {
         return $this->belongsTo(Client::class);
     }
-    
+
     public function commande(): BelongsTo
     {
         return $this->belongsTo(CommandeClient::class);
     }
 
     public function details()
-{
-    return $this->hasMany(BonLivraisonDetail::class, 'bon_livraison_id', 'id');
-}
+    {
+        return $this->hasMany(BonLivraisonDetail::class, 'bon_livraison_id', 'id');
+    }
+    public function factures()
+    {
+        return $this->belongsToMany(Facture::class, 'facture_bon_livraison');
+    }
 }
