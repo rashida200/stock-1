@@ -19,7 +19,22 @@ class Client extends Model
     {
         return $this->hasMany(CommandeClient::class);
     }
-    
+    public function devis()
+    {
+        return $this->hasMany(Devis::class);
+    }
+
+    // Relation avec les bons de livraison
+    public function bonsLivraison()
+    {
+        return $this->hasMany(BonLivraison::class);
+    }
+
+    // Relation avec les factures
+    public function factures()
+    {
+        return $this->hasMany(Facture::class);
+    }
 }
 
 

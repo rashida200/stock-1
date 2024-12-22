@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BonCommande;
+use App\Models\Facture;
 use App\Models\Fournisseur;
 use Illuminate\Http\Request;
 
@@ -20,6 +22,13 @@ class FournisseurController extends Controller
         })->paginate(10);
 
         return view('fournisseurs.index', compact('fournisseurs', 'search'));
+    }
+
+    public function history(Fournisseur $fournisseur)
+    {
+        $bonsCommande =$fournisseur->bonsCommande()->get();
+
+        return view('fournisseurs.history', compact('fournisseur', 'bonsCommande'));
     }
 
 

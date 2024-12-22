@@ -49,9 +49,7 @@
                                         <i class="fas fa-edit"></i>
                                     </button>
 
-                                    <button class="btn btn-primary btn-sm" title="Historique">
-                                        <i class="fas fa-history"></i>
-                                    </button>
+                                    <a href="{{ route('fournisseurs.history', $fournisseur) }}" class="btn btn-primary btn-sm" title="Historique"><i class="fas fa-history"></i></a>
                                     <form action="{{ route('admin.fournisseurs.destroy', $fournisseur->id) }}"
                                         method="POST"
                                         onsubmit="return confirm('Are you sure you want to delete this fournisseur?')">

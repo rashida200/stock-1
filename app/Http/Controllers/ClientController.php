@@ -107,6 +107,16 @@ class ClientController extends Controller
 
         return redirect()->route('clients.index')->with('success', 'Client mis à jour avec succès.');
     }
+    public function historique(Client $client)
+    {
+    // Récupérer tous les devis, bons de livraison et factures pour ce client
+    $devis = $client->devis()->get();
+    $bonsLivraison = $client->bonsLivraison()->get();
+    $factures = $client->factures()->get();
+
+    // Retourner une vue avec les données
+    return view('clients.historique', compact('client', 'devis', 'bonsLivraison', 'factures'));
+    }
 
     /**
      * Remove the specified resource from storage.

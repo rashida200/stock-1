@@ -15,4 +15,9 @@ class Fournisseur extends Model
     {
         return $this->hasMany(Produit::class);
     }
+    public function bonsCommande()
+    {
+        return $this->hasMany(BonCommande::class);
+    }
+
 }

@@ -51,9 +51,8 @@
                                         <i class="fas fa-edit"></i>
                                     </button>
 
-                                    <button class="btn btn-primary btn-sm" title="Historique">
-                                        <i class="fas fa-history"></i>
-                                    </button>
+                                    <a href="{{ route('clients.historique', $client) }}" class="btn btn-primary btn-sm" title="Historique"><i class="fas fa-history"></i></a>
+
 
                                     <form action="{{ route('clients.destroy', $client->id) }}" method="POST"
                                         onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?')">

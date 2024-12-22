@@ -39,8 +39,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::get('/fournisseurs', [FournisseurController::class, 'index'])->name('admin.fournisseurs');
         Route::post('/fournisseurs', [FournisseurController::class, 'store'])->name('admin.fournisseurs.store');
+        Route::get('/fournisseurs/{fournisseur}/history', [FournisseurController::class, 'history'])->name('fournisseurs.history');
         Route::delete('/fournisseurs/{id}', [FournisseurController::class, 'destroy'])->name('admin.fournisseurs.destroy');
         Route::put('/fournisseurs/{id}', [FournisseurController::class, 'update'])->name('admin.fournisseurs.update');
+
+
         Route::resource('utilisateurs', UserController::class)->except(['show']);
         Route::delete('/utilisateurs/{user}', [UserController::class, 'destroy'])->name('utilisateurs.destroy');
 
@@ -54,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
         Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
         Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
+        Route::get('/clients/{client}/historique', [ClientController::class, 'historique'])->name('clients.historique');
         Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
 
         Route::resource('bons-commande', BonCommandeController::class);
