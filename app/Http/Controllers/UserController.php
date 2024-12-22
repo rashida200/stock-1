@@ -8,18 +8,19 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function index(Request $request)
-    {
-        $search = $request->input('search');
+{
+    $search = $request->input('search');
 
-        $users = User::where('type', '!=', 'admin') // Exclude admins if necessary
-            ->when($search, function ($query, $search) {
-                $query->where('name', 'like', "%$search%")
-                    ->orWhere('email', 'like', "%$search%");
-            })
-            ->paginate(10); // Adjust the number of results per page as needed
+    $users = User::where('type', '!=', 'admin') // Optionnel : Exclure les admins
+        ->when($search, function ($query, $search) {
+            $query->where('name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%");
+        })
+        ->paginate(10); // Ajustez le nombre de résultats par page
 
-        return view('utilisateurs.index', compact('users', 'search'));
-    }
+    return view('utilisateurs.index', compact('users', 'search'));
+}
+
 
 
 
@@ -34,7 +35,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
-            'type' => 'required|in:admin,manager,cashier',
+            'type' => 'required|in:admin,manager,commercial',
         ]);
 
         User::create([
@@ -57,7 +58,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'type' => 'required|in:admin,manager,cashier',
+            'type' => 'required|in:admin,manager,commercial',
         ]);
 
         $user->update($request->only('name', 'email', 'type'));

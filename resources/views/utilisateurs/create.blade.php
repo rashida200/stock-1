@@ -25,7 +25,7 @@
                         <select class="form-control" id="type" name="type" required>
                             <option value="admin">Admin</option>
                             <option value="manager">Manager</option>
-                            <option value="cashier">Cashier</option>
+                            <option value="commercial">Commercial</option>
                         </select>
                     </div>
                 </div>

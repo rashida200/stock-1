@@ -19,8 +19,8 @@ class ManagerMiddleware
             switch (Auth::user()->type) {
                 case 'admin':
                     return redirect('/admin')->with('error', 'Access denied. Redirected to Admin dashboard.');
-                case 'cashier':
-                    return redirect('/cashier')->with('error', 'Access denied. Redirected to Cashier dashboard.');
+                case 'commercial':
+                    return redirect('/commercial')->with('error', 'Access denied. Redirected to Commercial dashboard.');
                 default:
                     return redirect('/login');
             }

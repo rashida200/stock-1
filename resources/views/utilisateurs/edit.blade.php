@@ -23,7 +23,7 @@
                         <select class="form-control" id="type-{{ $user->id }}" name="type" required>
                             <option value="admin" {{ $user->type == 'admin' ? 'selected' : '' }}>Admin</option>
                             <option value="manager" {{ $user->type == 'manager' ? 'selected' : '' }}>Manager</option>
-                            <option value="cashier" {{ $user->type == 'cashier' ? 'selected' : '' }}>Cashier</option>
+                            <option value="commercial" {{ $user->type == 'commercial' ? 'selected' : '' }}>Commercial</option>
                         </select>
                     </div>
                 </div>

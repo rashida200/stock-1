@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CashierController extends Controller
+class CommercialController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('cashier');
+        $this->middleware('commercial');
     }
 
     public function index()
     {
-        return view('cashier.dashboard');
+        return view('commercial.dashboard');
     }
 }

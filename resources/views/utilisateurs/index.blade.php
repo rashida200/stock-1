@@ -1,5 +1,4 @@
 <x-base>
-    @section('title', 'Utilisateurs')
     <div class="table-responsive small">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">

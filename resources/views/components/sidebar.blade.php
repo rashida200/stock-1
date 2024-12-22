@@ -1,6 +1,6 @@
 <nav class="nav flex-column">
     <!-- Dashboard Link -->
-    <a class="nav-link mb-2 rounded {{ request()->is('admin') || request()->is('manager') || request()->is('cashier') ? 'active' : '' }}"
+    <a class="nav-link mb-2 rounded {{ request()->is('admin') || request()->is('manager') || request()->is('commercial') ? 'active' : '' }}"
         href="/home">
         <i class="fas fa-home me-2"></i>Dashboard
     </a>

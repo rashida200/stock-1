@@ -6,11 +6,11 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CashierMiddleware
+class CommercialMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->type == 'cashier') {
+        if (Auth::check() && Auth::user()->type == 'commercial') {
             return $next($request);
         }
 

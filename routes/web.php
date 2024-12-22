@@ -12,6 +12,7 @@ use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommandeClientController;
+use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\FournisseurController;
@@ -44,9 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/fournisseurs/{id}', [FournisseurController::class, 'update'])->name('admin.fournisseurs.update');
 
 
-        Route::resource('utilisateurs', UserController::class)->except(['show']);
-        Route::delete('/utilisateurs/{user}', [UserController::class, 'destroy'])->name('utilisateurs.destroy');
-
+        Route::resource('utilisateurs', UserController::class);
 
 
         Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
@@ -91,7 +90,41 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     // Cashier routes
-    Route::group(['prefix' => 'cashier', 'middleware' => ['cashier']], function () {
-        Route::get('/', [CashierController::class, 'index'])->name('cashier.dashboard');
+    Route::group(['prefix' => 'commercial', 'middleware' => ['commercial']], function () {
+        Route::get('/', [CommercialController::class, 'index'])->name('commercial.dashboard');
+
+        Route::get('/fournisseurs', [FournisseurController::class, 'index'])->name('admin.fournisseurs');
+        Route::post('/fournisseurs', [FournisseurController::class, 'store'])->name('admin.fournisseurs.store');
+        Route::get('/fournisseurs/{fournisseur}/history', [FournisseurController::class, 'history'])->name('fournisseurs.history');
+        Route::delete('/fournisseurs/{id}', [FournisseurController::class, 'destroy'])->name('admin.fournisseurs.destroy');
+        Route::put('/fournisseurs/{id}', [FournisseurController::class, 'update'])->name('admin.fournisseurs.update');
+
+        Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+        Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
+        Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
+        Route::get('/clients/{client}/historique', [ClientController::class, 'historique'])->name('clients.historique');
+        Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
+
+        Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
+        Route::post('/produits', [ProduitController::class, 'store'])->name('produits.store');
+        Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
+        Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
+
+        Route::resource('commandes', CommandeClientController::class);
+
+        Route::resource('utilisateurs', UserController::class);
+
+        Route::resource('stock', StockController::class);
+
+        Route::resource('bons-commande', BonCommandeController::class);
+        Route::get('/bons-commande/{bonCommande}/print', [BonCommandeController::class, 'print'])->name('bons-commande.print');
+
+        Route::resource('devis', DevisController::class);
+        Route::get('/devis/{id}/print', [DevisController::class, 'print'])->name('devis.print');
+
+        Route::resource('/bons-livraison', BonLivraisonController::class);
+        Route::get('/bons-livraison/{bonLivraison}/print', [BonLivraisonController::class, 'print'])->name('bons-livraison.print');
+
+        Route::get('/identifiants', [IdentifiantController::class, 'show'])->name('identifiants.show');
     });
 });

@@ -57,8 +57,8 @@ class User extends Authenticatable
         return $this->type === 'manager';
     }
 
-    public function isCashier()
+    public function isCommercial()
     {
-        return $this->type === 'cashier';
+        return $this->type === 'commercial';
     }
 }
