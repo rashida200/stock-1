@@ -290,3 +290,45 @@
     background-color: #0d6efd;
     border-color: #0d6efd;
 }
+
+#bonsDropdown {
+
+    color: #333; /* Couleur du texte */
+    border-radius: 5px; /* Bords arrondis */
+    padding: 10px 20px;
+    transition: background-color 0.3s, transform 0.3s; /* Transition pour les effets au survol */
+}
+
+#bonsDropdown:hover {
+    color: #0056b3; /* Couleur de fond au survol */
+    transform: scale(1.05); /* Légère augmentation de la taille au survol */
+    cursor: pointer; /* Curseur pointeur pour indiquer qu'il est cliquable */
+}
+
+#bonsDropdown:focus {
+    box-shadow: 0 0 0 0.25rem rgba(38, 143, 255, 0.5); /* Ombre autour du bouton lorsqu'il est en focus */
+}
+
+/* Style pour le menu déroulant */
+.dropdown-menu {
+    border-radius: 5px; /* Bords arrondis pour le menu */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre portée pour un effet de profondeur */
+    background-color: #f8f9fa; /* Couleur de fond du menu */
+}
+
+/* Style pour les items du menu */
+.dropdown-item {
+    color: #333;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.dropdown-item.active {
+    background-color: #0056b3;
+    color: white;
+}

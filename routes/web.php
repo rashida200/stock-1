@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BanqueController;
 use App\Http\Controllers\BonCommandeController;
 use App\Http\Controllers\BonDeCommandeController;
 use App\Http\Controllers\BonLivraisonController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\CommandeClientController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\FournisseurController;
+use App\Http\Controllers\IdentifiantController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\StockController;
 use App\Models\Produit;
@@ -70,7 +72,14 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::resource('factures', FactureController::class);
         Route::get('/factures/{facture}/print', [FactureController::class, 'print'])->name('factures.print');
+
+
+        Route::resource('banques', BanqueController::class);
+
+        Route::get('/identifiants', [IdentifiantController::class, 'show'])->name('identifiants.show');
+        Route::post('/identifiants', [IdentifiantController::class, 'save'])->name('identifiants.save');
     });
+
 
     // Manager routes
     Route::group(['prefix' => 'manager', 'middleware' => ['manager']], function () {
