@@ -36,95 +36,49 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth']], function () {
     // Admin routes
-    Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
-        Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
-        Route::get('/fournisseurs', [FournisseurController::class, 'index'])->name('admin.fournisseurs');
-        Route::post('/fournisseurs', [FournisseurController::class, 'store'])->name('admin.fournisseurs.store');
-        Route::get('/fournisseurs/{fournisseur}/history', [FournisseurController::class, 'history'])->name('fournisseurs.history');
-        Route::delete('/fournisseurs/{id}', [FournisseurController::class, 'destroy'])->name('admin.fournisseurs.destroy');
-        Route::put('/fournisseurs/{id}', [FournisseurController::class, 'update'])->name('admin.fournisseurs.update');
+
+    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/fournisseurs', [FournisseurController::class, 'index'])->name('admin.fournisseurs');
+    Route::post('/fournisseurs', [FournisseurController::class, 'store'])->name('admin.fournisseurs.store');
+    Route::get('/fournisseurs/{fournisseur}/history', [FournisseurController::class, 'history'])->name('fournisseurs.history');
+    Route::delete('/fournisseurs/{id}', [FournisseurController::class, 'destroy'])->name('admin.fournisseurs.destroy');
+    Route::put('/fournisseurs/{id}', [FournisseurController::class, 'update'])->name('admin.fournisseurs.update');
 
 
-        Route::resource('utilisateurs', UserController::class);
+    Route::resource('utilisateurs', UserController::class);
 
 
-        Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
-        Route::post('/produits', [ProduitController::class, 'store'])->name('produits.store');
-        Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
-        Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
+    Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
+    Route::post('/produits', [ProduitController::class, 'store'])->name('produits.store');
+    Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
+    Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
 
-        Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
-        Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
-        Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
-        Route::get('/clients/{client}/historique', [ClientController::class, 'historique'])->name('clients.historique');
-        Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
+    Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+    Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
+    Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
+    Route::get('/clients/{client}/historique', [ClientController::class, 'historique'])->name('clients.historique');
+    Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
 
-        Route::resource('bons-commande', BonCommandeController::class);
-        Route::get('/bons-commande/{bonCommande}/print', [BonCommandeController::class, 'print'])->name('bons-commande.print');
+    Route::resource('bons-commande', BonCommandeController::class);
+    Route::get('/bons-commande/{bonCommande}/print', [BonCommandeController::class, 'print'])->name('bons-commande.print');
 
-        Route::resource('devis', DevisController::class);
-        Route::get('/devis/{id}/print', [DevisController::class, 'print'])->name('devis.print');
+    Route::resource('devis', DevisController::class);
+    Route::get('/devis/{id}/print', [DevisController::class, 'print'])->name('devis.print');
 
-        Route::resource('/bons-livraison', BonLivraisonController::class);
-        Route::get('/bons-livraison/{bonLivraison}/print', [BonLivraisonController::class, 'print'])->name('bons-livraison.print');
+    Route::resource('/bons-livraison', BonLivraisonController::class);
+    Route::get('/bons-livraison/{bonLivraison}/print', [BonLivraisonController::class, 'print'])->name('bons-livraison.print');
 
-        Route::resource('commandes', CommandeClientController::class);
+    Route::resource('commandes', CommandeClientController::class);
 
-        Route::resource('stock', StockController::class);
-
-
-        Route::resource('factures', FactureController::class);
-        Route::get('/factures/{facture}/print', [FactureController::class, 'print'])->name('factures.print');
+    Route::resource('stock', StockController::class);
 
 
-        Route::resource('banques', BanqueController::class);
-
-        Route::get('/identifiants', [IdentifiantController::class, 'show'])->name('identifiants.show');
-        Route::post('/identifiants', [IdentifiantController::class, 'save'])->name('identifiants.save');
-    });
+    Route::resource('factures', FactureController::class);
+    Route::get('/factures/{facture}/print', [FactureController::class, 'print'])->name('factures.print');
 
 
-    // Manager routes
-    Route::group(['prefix' => 'manager', 'middleware' => ['manager']], function () {
-        Route::get('/', [ManagerController::class, 'index'])->name('manager.dashboard');
-    });
+    Route::resource('banques', BanqueController::class);
 
-    // Cashier routes
-    Route::group(['prefix' => 'commercial', 'middleware' => ['commercial']], function () {
-        Route::get('/', [CommercialController::class, 'index'])->name('commercial.dashboard');
-
-        Route::get('/fournisseurs', [FournisseurController::class, 'index'])->name('admin.fournisseurs');
-        Route::post('/fournisseurs', [FournisseurController::class, 'store'])->name('admin.fournisseurs.store');
-        Route::get('/fournisseurs/{fournisseur}/history', [FournisseurController::class, 'history'])->name('fournisseurs.history');
-        Route::delete('/fournisseurs/{id}', [FournisseurController::class, 'destroy'])->name('admin.fournisseurs.destroy');
-        Route::put('/fournisseurs/{id}', [FournisseurController::class, 'update'])->name('admin.fournisseurs.update');
-
-        Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
-        Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
-        Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
-        Route::get('/clients/{client}/historique', [ClientController::class, 'historique'])->name('clients.historique');
-        Route::delete('/clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
-
-        Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
-        Route::post('/produits', [ProduitController::class, 'store'])->name('produits.store');
-        Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
-        Route::delete('/produits/{produit}', [ProduitController::class, 'destroy'])->name('produits.destroy');
-
-        Route::resource('commandes', CommandeClientController::class);
-
-        Route::resource('utilisateurs', UserController::class);
-
-        Route::resource('stock', StockController::class);
-
-        Route::resource('bons-commande', BonCommandeController::class);
-        Route::get('/bons-commande/{bonCommande}/print', [BonCommandeController::class, 'print'])->name('bons-commande.print');
-
-        Route::resource('devis', DevisController::class);
-        Route::get('/devis/{id}/print', [DevisController::class, 'print'])->name('devis.print');
-
-        Route::resource('/bons-livraison', BonLivraisonController::class);
-        Route::get('/bons-livraison/{bonLivraison}/print', [BonLivraisonController::class, 'print'])->name('bons-livraison.print');
-
-        Route::get('/identifiants', [IdentifiantController::class, 'show'])->name('identifiants.show');
-    });
+    Route::get('/identifiants', [IdentifiantController::class, 'show'])->name('identifiants.show');
+    Route::post('/identifiants', [IdentifiantController::class, 'save'])->name('identifiants.save');
 });

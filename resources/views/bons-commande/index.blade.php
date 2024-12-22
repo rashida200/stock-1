@@ -17,7 +17,10 @@
                             <th>Total HT</th>
                             <th>Total TTC</th>
                             <th>Statut</th>
+                            @if (auth()->user()->type === 'admin')
+
                             <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -29,6 +32,7 @@
                                 <td>{{ number_format($bc->total_ht, 2) }} DH</td>
                                 <td>{{ number_format($bc->total_ttc, 2) }} DH</td>
                                 <td>{{ $bc->statut }}</td>
+                                @if (auth()->user()->type === 'admin')
                                 <td>
                                     <a href="{{ route('bons-commande.edit', $bc->id) }}" class="btn btn-sm btn-success">
                                        modifier
@@ -41,6 +45,8 @@
 
 
                                 </td>
+                                @endif
+
                             </tr>
                         @endforeach
                     </tbody>

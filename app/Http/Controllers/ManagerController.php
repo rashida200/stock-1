@@ -8,7 +8,7 @@ class ManagerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('manager');
+        $this->middleware('role:manager');
     }
 
     public function index()

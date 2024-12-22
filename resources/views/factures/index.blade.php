@@ -29,9 +29,11 @@
                                 <td>{{ number_format($facture->total_ttc, 2) }} DH</td>
                                 <td>{{ $facture->statut }}</td>
                                 <td>
+                                    @if (auth()->user()->type === 'admin')
                                     <a href="{{ route('factures.edit', $facture) }}" class="btn btn-sm btn-success">
                                         <i class="fas fa-edit"></i> Modifier
                                     </a>
+                                    @endif
                                     <a href="{{ route('factures.print', $facture) }}" class="btn btn-sm btn-success" target="_blank">
                                         Imprimer PDF
                                     </a>

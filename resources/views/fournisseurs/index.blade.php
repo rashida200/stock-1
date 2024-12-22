@@ -23,7 +23,10 @@
                     <th scope="col">Adresse</th>
                     <th scope="col">Email</th>
                     <th scope="col">RIB</th>
+                    @if (auth()->user()->type === 'admin')
+
                     <th scope="col">Actions</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +44,7 @@
                             <td>{{ $fournisseur->adresse }}</td>
                             <td>{{ $fournisseur->email }}</td>
                             <td>{{ $fournisseur->rib }}</td>
+                            @if (auth()->user()->type === 'admin')
                             <td class="align-middle">
                                 <div class="d-flex justify-content-center gap-1">
 
@@ -63,6 +67,8 @@
 
                                 </div>
                             </td>
+                            @endif
+
                         </tr>
                     @endforeach
                 @endif

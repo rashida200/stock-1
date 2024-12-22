@@ -2,9 +2,11 @@
     @section('title', 'Produits')
     <div class="table-responsive small">
         <div class="d-flex justify-content-between align-items-center mb-3">
+            @if (auth()->user()->type === 'admin')
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                 <i class="fas fa-plus"></i> Ajouter Produit
             </button>
+            @endif
             <form action="{{ route('produits.index') }}" method="GET" class="d-flex">
                 <input type="text" name="search" class="form-control me-2"
                     placeholder="Rechercher par référence ou désignation" value="{{ $search ?? '' }}">
@@ -31,7 +33,10 @@
                     <th scope="col">Total HT</th>
                     <th scope="col">Total TTC</th>
                     <th scope="col">Fournisseur</th>
+                    @if (auth()->user()->type === 'admin' || auth()->user()->type === 'commercial')
                     <th scope="col">Actions</th>
+                    @endif
+
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +58,7 @@
                             <td>{{ $produit->total_ht }}</td>
                             <td>{{ $produit->total_ttc }}</td>
                             <td>{{ $produit->fournisseur->nom }}</td>
+                            @if (auth()->user()->type === 'admin' || auth()->user()->type === 'commercial')
                             <td class="align-middle">
                                 <div class="d-flex justify-content-center gap-1">
 
@@ -72,6 +78,7 @@
 
                                 </div>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                 @endif

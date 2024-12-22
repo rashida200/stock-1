@@ -38,20 +38,20 @@
                                 <div class="d-flex justify-content-center gap-1">
                                     <a href="{{ route('commandes.edit', $commande->id) }}" class="btn btn-sm btn-success">
                                         modifier
-                                     </a> 
-                                     
+                                     </a>
+
                                     {{-- <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#detailsModal-{{ $commande->id }}">
                                         <i class="fas fa-search-plus"></i>
                                     </button> --}}
                                     <a href="{{ route('commandes.show', $commande->id) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-search-plus"></i>
-                                     </a> 
+                                     </a>
                                 </div>
                             </td>
                         </tr>
                         <!-- Modale pour afficher les détails de la commande -->
-    
+
                     @endforeach
                 @endif
             </tbody>
@@ -70,6 +70,6 @@
     </div>
 
 
-    
+
 
 </x-base>

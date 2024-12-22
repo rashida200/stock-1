@@ -18,7 +18,10 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
+                    @if (auth()->user()->type === 'admin')
+
                     <th>Actions</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +35,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->type }}</td>
+                        @if (auth()->user()->type === 'admin')
                         <td class="align-middle">
                             <div class="d-flex justify-content-center gap-1">
                                 <button class="btn btn-success btn-sm" data-bs-toggle="modal"
@@ -51,6 +55,7 @@
                                 </form>
                             </div>
                         </td>
+                        @endif
                     </tr>
                 @endforeach
                 @endif

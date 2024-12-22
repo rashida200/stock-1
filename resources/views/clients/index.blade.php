@@ -24,7 +24,10 @@
                     <th scope="col">Adresse</th>
                     <th scope="col">Adresse de projet</th>
                     <th scope="col">Nombre d'hectares</th>
+                    @if (auth()->user()->type === 'admin')
+
                     <th scope="col">Actions</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -43,6 +46,7 @@
                             <td>{{ $client->adresse }}</td>
                             <td>{{ $client->adresse_projet ?? $client->adresse }}</td>
                             <td>{{ $client->nombre_hectare ?? 'Non renseigné' }}</td>
+                            @if (auth()->user()->type === 'admin')
                             <td class="align-middle">
                                 <div class="d-flex justify-content-center gap-1">
 
@@ -65,6 +69,8 @@
 
                                 </div>
                             </td>
+                            @endif
+
                         </tr>
                     @endforeach
                 @endif

@@ -8,11 +8,11 @@ class CommercialController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('commercial');
+        $this->middleware('role:commercial');
     }
 
     public function index()
     {
-        return view('commercial.dashboard');
+        return redirect('/');
     }
 }

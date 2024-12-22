@@ -18,7 +18,10 @@
                             <th>Statut</th>
                             <th>Total HT</th>
                             <th>Total TTC</th>
+                            @if (auth()->user()->type === 'admin')
+
                             <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -30,6 +33,7 @@
                                 <td>{{$devi->statut}}</td>
                                 <td>{{ number_format($devi->total_ht, 2) }} DH</td>
                                 <td>{{ number_format($devi->total_ttc, 2) }} DH</td>
+                                @if (auth()->user()->type === 'admin')
                                 <td>
                                     <a href="{{ route('devis.edit', $devi->id) }}" class="btn btn-sm btn-success">
                                         Modifier
@@ -40,6 +44,8 @@
                                         Imprimer PDF
                                     </a>
                                 </td>
+                                @endif
+
                             </tr>
                         @endforeach
                     </tbody>
