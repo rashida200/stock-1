@@ -20,6 +20,16 @@
                             <label for="date_devis">Date du Devis</label>
                             <input type="date" name="date_devis" id="date_devis" class="form-control" value="{{ old('date_devis', date('Y-m-d')) }}" required>
                         </div>
+
+                        <div class="col-md-6">
+                            <label for="statut">Statut</label>
+                            <select class="form-control" name="statut" id="statut" required>
+                                <option value="">--Choisir un statut--</option>
+                                <option value="en_attente" {{ old('statut') == 'en_attente' ? 'selected' : '' }}>En attente</option>
+                                <option value="accepté" {{ old('statut') == 'accepté' ? 'selected' : '' }}>Accepté</option>
+                                <option value="refusé" {{ old('statut') == 'refusé' ? 'selected' : '' }}>Refusé</option>
+                            </select>
+                        </div>
                     </div>
 
                     <h3>Produits</h3>

@@ -15,6 +15,7 @@
                             <th>ID</th>
                             <th>Client</th>
                             <th>Date</th>
+                            <th>Statut</th>
                             <th>Total HT</th>
                             <th>Total TTC</th>
                             <th>Actions</th>
@@ -26,6 +27,7 @@
                                 <td>{{ $devi->id }}</td>
                                 <td>{{ $devi->client->nom }}</td>
                                 <td>{{ $devi->date_devis }}</td>
+                                <td>{{$devi->statut}}</td>
                                 <td>{{ number_format($devi->total_ht, 2) }} DH</td>
                                 <td>{{ number_format($devi->total_ttc, 2) }} DH</td>
                                 <td>

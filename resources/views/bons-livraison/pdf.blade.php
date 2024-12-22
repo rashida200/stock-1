@@ -16,7 +16,7 @@
             color: #333;
             min-height: 100vh;
             position: relative;
-            padding-bottom: 60px;
+            padding-bottom: 80px; /* Adjusted for footer and signatures */
         }
 
         h1 {
@@ -30,7 +30,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            /* background-color: #0056b3; */
             color: black;
             font-weight: bold;
         }
@@ -56,7 +55,6 @@
         .footer {
             text-align: center;
             padding: 10px;
-            /* background-color: #0056b3; */
             color: black;
             font-weight: bold;
             position: absolute;
@@ -65,7 +63,18 @@
             width: 100%;
             box-sizing: border-box;
         }
+        @media print {
+        body {
+            page-break-inside: avoid;
+        }
 
+        .signature-section,
+        .total-section,
+        .header-info,
+        table {
+            page-break-inside: avoid; /* Empêche les coupures internes */
+        }
+    }
         /* Table Styles */
         table {
             width: 100%;
@@ -99,6 +108,33 @@
             font-size: 16px;
         }
 
+        .signature-section {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px 0;
+        }
+
+        .signature-box {
+            width: 45%;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .signature-box h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+
+        .signature-box p {
+            margin: 20px 0;
+            font-style: italic;
+            color: #555;
+        }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -109,25 +145,58 @@
                 text-align: left;
                 margin-top: 10px;
             }
+
+            .signature-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .signature-box {
+                width: 100%;
+                margin-bottom: 20px;
+            }
         }
+        .signature-section {
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .signature-box {
+        width: 45%;
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+        background-color: #fff;
+    }
+
+    .signature-box p {
+        margin: 8px 0;
+    }
+
+    .signature-box .signature-line {
+        margin-top: 20px;
+        border-top: 1px solid #333;
+        width: 70%;
+    }
     </style>
 </head>
 <body>
-        <div class="header">
-            <h1>Bon de Livraison</h1>
-            <p><strong>N° BL:</strong> {{ $bonLivraison->numero_bl }}</p>
-        </div>
-        <div class="header-logo">
-            <x-company-header />
-        </div>
+    <div class="header">
+        <h1>Bon de Livraison</h1>
+        <p><strong>N° BL:</strong> {{ $bonLivraison->numero_bl }}</p>
+    </div>
+    <div class="header-logo">
+        <x-company-header />
+    </div>
 
-        <div class="header-info">
-            <p><strong>Client:</strong> {{ $bonLivraison->client->nom }}</p>
-            <p><strong>Adresse:</strong> {{ $bonLivraison->client->adresse }}</p>
-            <p><strong>Téléphone:</strong> {{ $bonLivraison->client->telephone }}</p>
-            <p><strong>Date de Vente:</strong> {{ $bonLivraison->date_vente }}</p>
-            <p><strong>Date de Livraison:</strong> {{ $bonLivraison->date_livraison }}</p>
-        </div>
+    <div class="header-info">
+        <p><strong>Client:</strong> {{ $bonLivraison->client->nom }}</p>
+        <p><strong>Adresse:</strong> {{ $bonLivraison->client->adresse }}</p>
+        <p><strong>Téléphone:</strong> {{ $bonLivraison->client->telephone }}</p>
+        <p><strong>Date de Vente:</strong> {{ $bonLivraison->date_vente }}</p>
+        <p><strong>Date de Livraison:</strong> {{ $bonLivraison->date_livraison }}</p>
+    </div>
 
     <table class="print">
         <thead>
@@ -142,29 +211,39 @@
             </tr>
         </thead>
         <tbody>
-    @foreach ($bonLivraison->details as $detail)
-        <tr>
-            <td>{{ $detail->produit->reference ?? 'N/A' }}</td> <!-- Corrected reference -->
-            <td>{{ $detail->produit->designation ?? 'N/A' }}</td>
-            <td>{{ $detail->quantite }}</td>
-            <td>{{ number_format($detail->prix_unitaire_ht, 2) }} DH</td>
-            <td>{{ number_format($detail->tva, 2) }} %</td>
-            <td>{{ number_format($detail->total_ligne_ht, 2) }} DH</td>
-            <td>{{ number_format($detail->total_ligne_ttc, 2) }} DH</td>
-        </tr>
-    @endforeach
-</tbody>
-
+            @foreach ($bonLivraison->details as $detail)
+            <tr>
+                <td>{{ $detail->produit->reference ?? 'N/A' }}</td>
+                <td>{{ $detail->produit->designation ?? 'N/A' }}</td>
+                <td>{{ $detail->quantite }}</td>
+                <td>{{ number_format($detail->prix_unitaire_ht, 2) }} DH</td>
+                <td>{{ number_format($detail->tva, 2) }} %</td>
+                <td>{{ number_format($detail->total_ligne_ht, 2) }} DH</td>
+                <td>{{ number_format($detail->total_ligne_ttc, 2) }} DH</td>
+            </tr>
+            @endforeach
+        </tbody>
     </table>
 
     <div class="total-section">
         <p><strong>Total HT:</strong> {{ number_format($bonLivraison->total_ht, 2) }} DH</p>
-    <p><strong>Total TTC:</strong> {{ number_format($bonLivraison->total_ttc, 2) }} DH</p>
+        <p><strong>Total TTC:</strong> {{ number_format($bonLivraison->total_ttc, 2) }} DH</p>
+    </div>
+
+    <div class="signature-section">
+        <div class="signature-box">
+            <h3>Signature de l'Entreprise</h3>
+            <p>________________</p>
+        </div>
+        <div class="signature-box">
+            <h3>Signature du Client</h3>
+            <p>________________</p>
+        </div>
     </div>
 
     <div class="footer">
         <x-company-footer />
     </div>
 </body>
-
 </html>
+

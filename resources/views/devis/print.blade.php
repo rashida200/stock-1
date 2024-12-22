@@ -161,6 +161,16 @@
             </tr>
         </tfoot>
     </table>
+    <div class="signature-section" style="margin-top: 40px;">
+        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+            <div style="text-align: left;">
+                <p><strong>Préparé par :</strong></p>
+                <br><br>
+                <p>Nom et Prénom :</p>
+                <p>Signature :</p>
+            </div>
+        </div>
+    </div>
     <div class="footer">
         <x-company-footer />
     </div>

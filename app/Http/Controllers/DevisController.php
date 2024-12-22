@@ -35,6 +35,7 @@ class DevisController extends Controller
             'prix_unitaire_ht.*' => 'required|numeric|min:0',
             'tva' => 'required|array',
             'tva.*' => 'required|numeric|min:0|max:100',
+            'statut' => 'required|in:en_attente,accepté,refusé',
         ]);
 
         // Transaction pour garantir l'intégrité des données
@@ -43,6 +44,7 @@ class DevisController extends Controller
             $devis = Devis::create([
                 'client_id' => $validated['client_id'],
                 'date_devis' => $validated['date_devis'],
+                'statut' => $validated['statut'],
             ]);
 
             $total_ht = 0;
@@ -125,6 +127,7 @@ class DevisController extends Controller
         'prix_unitaire_ht.*' => 'required|numeric|min:0',
         'tva' => 'required|array|min:1',
         'tva.*' => 'required|numeric|in:7,10,20',
+        'statut' => 'required|in:accepté,refusé',
     ]);
 
     DB::transaction(function () use ($request, $id) {
@@ -135,6 +138,7 @@ class DevisController extends Controller
         $devis->update([
             'client_id' => $request->client_id,
             'date_devis' => $request->date_devis,
+            'statut' => $request->statut,
             'total_ht' => 0,  // Will recalculate
             'total_ttc' => 0, // Will recalculate
         ]);

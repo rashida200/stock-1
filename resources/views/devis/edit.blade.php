@@ -22,6 +22,13 @@
                             <input type="date" name="date_devis" id="date_devis" class="form-control" value="{{ old('date_devis', $devis->date_devis) }}" required>
                         </div>
                     </div>
+                    <div class="col">
+                        <label>Statut</label>
+                        <select name="statut" class="form-control">
+                            <option value="accepté" {{ old('statut', $devis->statut) == 'accepté' ? 'selected' : '' }}>Accepté</option>
+                            <option value="refusé" {{ old('statut', $devis->statut) == 'refusé' ? 'selected' : '' }}>Refusé</option>
+                        </select>
+                    </div>
 
                     <h3>Produits</h3>
                     <div id="produits-container">
