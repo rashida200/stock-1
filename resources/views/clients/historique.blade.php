@@ -2,6 +2,13 @@
     <div class="container mt-5">
         <h1 class="mb-4 text-center">Historique de {{ $client->nom }}</h1>
 
+        <!-- Bouton de retour -->
+        <div class="mb-4">
+            <a href="{{ route('clients.index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour aux Clients
+            </a>
+        </div>
+
         <div class="row">
             <!-- Carte des Devis -->
             <div class="col-md-4">
@@ -74,4 +81,4 @@
             </div>
         </div>
     </div>
-    </x-base>
+</x-base>

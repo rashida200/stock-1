@@ -1,9 +1,11 @@
 <x-base>
     <div class="container">
         <h1>Liste des Factures</h1>
-        <a href="{{ route('factures.create') }}" class="btn btn-primary mb-3">
-            Nouvelle Facture
-        </a>
+     @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
+     <a href="{{ route('factures.create') }}" class="btn btn-primary mb-3">
+        Nouvelle Facture
+    </a>
+     @endif
 
         <div class="card">
             <div class="card-body">

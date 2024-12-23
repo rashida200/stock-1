@@ -2,7 +2,7 @@
     @section('title', 'Produits')
     <div class="table-responsive small">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            @if (auth()->user()->type === 'admin')
+            @if (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                 <i class="fas fa-plus"></i> Ajouter Produit
             </button>
@@ -14,11 +14,6 @@
                 <a href="{{ route('produits.index') }}" class="btn btn-outline-secondary">Reset</a>
             </form>
         </div>
-
-
-
-
-
         <table class="table table-sm text-center">
             <thead class="table-dark">
                 <tr>

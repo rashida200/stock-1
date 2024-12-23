@@ -2,10 +2,11 @@
 
     <div class="container">
         <h1>Liste des Bons de Livraison</h1>
+        @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
         <a href="{{ route('bons-livraison.create') }}" class="btn btn-primary mb-3">
             Nouveau Bon de Livraison
         </a>
-
+        @endif
         <div class="card">
             <div class="card-body">
                 <table class="table table-sm text-center">
@@ -17,7 +18,7 @@
                             <th>Date de Livraison</th>
                             <th>Total HT</th>
                             <th>Total TTC</th>
-                            @if (auth()->user()->type === 'admin')
+                            @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
 
                             <th>Actions</th>
                             @endif
@@ -32,7 +33,7 @@
                                 <td>{{ $bl->date_livraison }}</td>
                                 <td>{{ number_format($bl->total_ht, 2) }} DH</td>
                                 <td>{{ number_format($bl->total_ttc, 2) }} DH</td>
-                                @if (auth()->user()->type === 'admin')
+                                @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
                                 <td>
                                     <a href="{{ route('bons-livraison.edit', $bl->id) }}" class="btn btn-sm btn-success">
                                         <i class="fas fa-edit"></i> Modifier

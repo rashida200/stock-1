@@ -5,8 +5,9 @@
     <div class="d-flex">
         <div class="sidebar bg-white p-3" id="sidebar">
             <div class="d-flex align-items-center mb-4 border-bottom pb-3">
-                <i class="fas fa-box-open text-primary me-2 fs-4"></i>
-                <h4 class="m-0">Inventory</h4>
+                {{-- <i class="fas fa-box-open text-primary me-2 fs-4"></i> --}}
+                <h5 class="m-0">AGRI IRRIGATION
+                    <br> AIT OUFKIR FRERES</h5>
             </div>
             <x-sidebar></x-sidebar>
         </div>

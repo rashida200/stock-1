@@ -183,13 +183,16 @@
 
                 {{-- Section du bouton de sauvegarde --}}
                 {{-- Vous pouvez modifier le style du bouton ou ajouter d'autres boutons --}}
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Enregistrer</button>
-                        {{-- Exemple d'un bouton d'annulation --}}
-                        {{-- <a href="{{ route('dashboard') }}" class="btn btn-secondary">Annuler</a> --}}
+
+                @if (auth()->user()->type === 'admin')
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            {{-- Exemple d'un bouton d'annulation --}}
+                            {{-- <a href="{{ route('dashboard') }}" class="btn btn-secondary">Annuler</a> --}}
+                        </div>
                     </div>
-                </div>
+                @endif
             </form>
         </div>
     </div>

@@ -2,9 +2,11 @@
     @section('title', 'Fournisseurs')
     <div class="table-responsive small">
         <div class="d-flex justify-content-between align-items-center mb-3">
+            @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                <i class="fas fa-plus"></i> Add New Fournisseur
+                <i class="fas fa-plus"></i> Ajouter un fournisseur
             </button>
+            @endif
             <form action="{{ route('admin.fournisseurs') }}" method="GET" class="d-flex">
                 <input type="text" name="search" class="form-control me-2" placeholder="Search by Nom or License"
                     value="{{ $search ?? '' }}">
@@ -23,7 +25,7 @@
                     <th scope="col">Adresse</th>
                     <th scope="col">Email</th>
                     <th scope="col">RIB</th>
-                    @if (auth()->user()->type === 'admin')
+                    @if (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
 
                     <th scope="col">Actions</th>
                     @endif
@@ -44,7 +46,7 @@
                             <td>{{ $fournisseur->adresse }}</td>
                             <td>{{ $fournisseur->email }}</td>
                             <td>{{ $fournisseur->rib }}</td>
-                            @if (auth()->user()->type === 'admin')
+                            @if (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
                             <td class="align-middle">
                                 <div class="d-flex justify-content-center gap-1">
 

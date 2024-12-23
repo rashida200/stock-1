@@ -98,6 +98,7 @@
                 <td>${produit.produit.reference}</td>
                 <td>${produit.produit.designation}</td>
                 <td>${produit.qte_vte}</td>
+                <td>${produit.remise}</td>
                 <td>${produit.prix_unitaire}</td>
                 <td>${produit.montant_ht}</td>
                 <td>${produit.tva}</td>

@@ -1,7 +1,12 @@
 <x-base>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Historique de {{ $fournisseur->nom }}</h1>
-
+        <!-- Bouton de retour -->
+        <div class="mb-4">
+            <a href="{{ route('admin.fournisseurs') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour aux Fournisseurs
+            </a>
+        </div>
         <div class="row">
             <!-- Bons de Commande -->
             <div class="col-md-6">
@@ -26,7 +31,7 @@
                 </div>
             </div>
 
-            
+
         </div>
     </div>
-    </x-base>
+</x-base>

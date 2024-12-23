@@ -165,7 +165,6 @@
         <div style="display: flex; justify-content: space-between; margin-top: 20px;">
             <div style="text-align: left;">
                 <p><strong>Préparé par :</strong></p>
-                <br><br>
                 <p>Nom et Prénom :</p>
                 <p>Signature :</p>
             </div>

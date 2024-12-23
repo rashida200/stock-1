@@ -1,9 +1,11 @@
 <x-base>
     <div class="table-responsive small">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                <i class="fas fa-plus"></i> Add New User
-            </button>
+           @if (auth()->user()->type === 'admin')
+           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+            <i class="fas fa-plus"></i> Ajouter un utilisateur
+        </button>
+           @endif
             <form action="{{ route('utilisateurs.index') }}" method="GET" class="d-flex">
                 <input type="text" name="search" class="form-control me-2"
                     placeholder="Search by Name or Email" value="{{ $search ?? '' }}">
@@ -15,7 +17,7 @@
         <table class="table table-sm text-center">
             <thead class="table-dark">
                 <tr>
-                    <th>Name</th>
+                    <th>Nom</th>
                     <th>Email</th>
                     <th>Role</th>
                     @if (auth()->user()->type === 'admin')
@@ -45,7 +47,7 @@
 
                                 <!-- Delete Button -->
                                 <form action="{{ route('utilisateurs.destroy', $user->id) }}" method="POST"
-                                    onsubmit="return confirm('Are you sure you want to delete this user?')"
+                                    onsubmit="return confirm('Vous coullez vraiment supprimer cet utilisateur?')"
                                     style="display:inline;">
                                     @csrf
                                     @method('DELETE')

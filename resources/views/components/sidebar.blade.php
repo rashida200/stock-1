@@ -1,9 +1,11 @@
 <nav class="nav flex-column">
     <!-- Dashboard Link -->
-    <a class="nav-link mb-2 rounded {{ request()->is('admin') || request()->is('manager') || request()->is('commercial') ? 'active' : '' }}"
-        href="/home">
-        <i class="fas fa-home me-2"></i>Dashboard
-    </a>
+   @if (auth()->user()->type === 'admin')
+    <a class="nav-link mb-2 rounded {{ request()->is('admin')? 'active' : '' }}"
+    href="/home">
+    <i class="fas fa-home me-2"></i>Dashboard
+</a>
+   @endif
     @if (auth()->user()->type === 'admin' || auth()->user()->type === 'manager' || auth()->user()->type === 'commercial')
         <a class="nav-link mb-2 rounded {{ request()->is('fournisseurs*') ? 'active' : '' }}"
             href="{{ route('admin.fournisseurs') }}">

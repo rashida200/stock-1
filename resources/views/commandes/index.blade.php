@@ -3,7 +3,9 @@
 
     <div class="table-responsive small">
         <div class="d-flex justify-content-between align-items-center mb-3">
+            @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
             <a class="btn btn-primary" href="{{ route('commandes.create') }}"><i class="fas fa-plus"></i> Ajouter Commande</a>
+            @endif
             <form action="{{ route('commandes.index') }}" method="GET" class="d-flex">
                 <input type="text" name="search" class="form-control me-2"
                     placeholder="Rechercher par référence ou client" value="{{ $search ?? '' }}">
@@ -19,7 +21,7 @@
                     <th scope="col">Date Commande</th>
                     <th scope="col">Client</th>
                     <th scope="col">Statut</th>
-                    <th scope="col">Actions</th>
+                   <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,9 +38,13 @@
                             <td>{{ $commande->statut }}</td>
                             <td class="align-middle">
                                 <div class="d-flex justify-content-center gap-1">
-                                    <a href="{{ route('commandes.edit', $commande->id) }}" class="btn btn-sm btn-success">
+
+                                     @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
+                                     <a href="{{ route('commandes.edit', $commande->id) }}" class="btn btn-sm btn-success">
                                         modifier
                                      </a>
+
+                                     @endif
 
                                     {{-- <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#detailsModal-{{ $commande->id }}">
