@@ -31,7 +31,7 @@
     @endif
     @if (auth()->user()->type === 'admin' || auth()->user()->type === 'manager' || auth()->user()->type === 'commercial')
     <div class="nav-item dropdown">
-        <a class="nav-link mb-2 rounded {{ request()->is('bons*') ? 'active' : '' }}" href="#" id="bonsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link mb-2 rounded {{ request()->is('bons') ? 'active' : '' }}" href="#" id="bonsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-file-invoice me-2"></i>Bons
         </a>
         <ul class="dropdown-menu" aria-labelledby="bonsDropdown">
@@ -54,7 +54,7 @@
     </div>
     @endif
     @if (auth()->user()->type === 'admin' || auth()->user()->type === 'manager')
-    <a class="nav-link mb-2 rounded {{ request()->is('factures*') ? 'active' : '' }}"
+    <a class="nav-link mb-2 rounded {{ request()->is('factures') ? 'active' : '' }}"
         href="{{ route('factures.index') }}">
         <i class="fas fa-warehouse me-2"></i>Factures
     </a>
@@ -80,6 +80,18 @@
     <a class="nav-link mb-2 rounded {{ request()->is('identifiants*') ? 'active' : '' }}"
         href="{{ route('identifiants.show') }}">
         <i class="fa-solid fa-money-check-dollar"></i> Identifiant
+    </a>
+    @endif
+    @if (auth()->user()->type === 'admin' || auth()->user()->type === 'manager' || auth()->user()->type === 'commercial')
+    <a class="nav-link mb-2 rounded {{ request()->is('bons-avoir*') ? 'active' : '' }}"
+        href="{{ route('bons-avoir.index') }}">
+        <i class="fa-solid fa-money-check-dollar"></i> bons-avoir
+    </a>
+    @endif
+    @if (auth()->user()->type === 'admin' || auth()->user()->type === 'manager' || auth()->user()->type === 'commercial')
+    <a class="nav-link mb-2 rounded {{ request()->is('factures-avoir*') ? 'active' : '' }}"
+        href="{{ route('factures-avoir.index') }}">
+        <i class="fa-solid fa-money-check-dollar"></i> factures-avoir
     </a>
     @endif
 

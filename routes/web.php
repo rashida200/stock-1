@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BanqueController;
+use App\Http\Controllers\BonAvoirController;
 use App\Http\Controllers\BonCommandeController;
 use App\Http\Controllers\BonDeCommandeController;
 use App\Http\Controllers\BonLivraisonController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CommandeClientController;
 use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\DevisController;
+use App\Http\Controllers\FactureAvoirController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\IdentifiantController;
@@ -81,4 +83,24 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/identifiants', [IdentifiantController::class, 'show'])->name('identifiants.show');
     Route::post('/identifiants', [IdentifiantController::class, 'save'])->name('identifiants.save');
+
+    Route::resource('bons-avoir', BonAvoirController::class);
+    Route::get('bons-avoir/{bonAvoir}/print', [BonAvoirController::class, 'print'])
+        ->name('bons-avoir.print');
+
+    // Factures d'Avoir Routes
+    Route::get('/factures-avoir', [FactureAvoirController::class, 'index'])
+        ->name('factures-avoir.index');
+
+    Route::get('/factures-avoir/create', [FactureAvoirController::class, 'create'])
+        ->name('factures-avoir.create');
+
+    Route::post('/factures-avoir', [FactureAvoirController::class, 'store'])
+        ->name('factures-avoir.store');
+
+    Route::get('/factures-avoir/{id}', [FactureAvoirController::class, 'show'])
+        ->name('factures-avoir.show');
+
+    Route::get('/factures-avoir/{factureAvoir}/print', [FactureAvoirController::class, 'print'])
+        ->name('factures-avoir.print');
 });
