@@ -25,11 +25,6 @@
                             <i class="fas fa-file-invoice"></i> Créer Facture d'Avoir
                         </a>
                     @endif
-                    <a href="{{ route('bons-avoir.print', $bonAvoir) }}"
-                       class="btn btn-success"
-                       target="_blank">
-                        <i class="fas fa-print"></i> Imprimer
-                    </a>
                 </div>
             </div>
 

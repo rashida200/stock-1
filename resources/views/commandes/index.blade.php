@@ -1,6 +1,10 @@
 <x-base>
     @section('title', 'Commandes')
-
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="table-responsive small">
         <div class="d-flex justify-content-between align-items-center mb-3">
             @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
@@ -10,7 +14,7 @@
                 <input type="text" name="search" class="form-control me-2"
                     placeholder="Rechercher par référence ou client" value="{{ $search ?? '' }}">
                 <button type="submit" class="btn btn-outline-primary me-2">Rechercher</button>
-                <a href="{{ route('commandes.index') }}" class="btn btn-outline-secondary">Reset</a>
+                <a href="{{ route('commandes.index') }}" class="btn btn-outline-secondary">Retour</a>
             </form>
         </div>
 
@@ -45,19 +49,12 @@
                                      </a>
 
                                      @endif
-
-                                    {{-- <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#detailsModal-{{ $commande->id }}">
-                                        <i class="fas fa-search-plus"></i>
-                                    </button> --}}
                                     <a href="{{ route('commandes.show', $commande->id) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-search-plus"></i>
                                      </a>
                                 </div>
                             </td>
                         </tr>
-                        <!-- Modale pour afficher les détails de la commande -->
-
                     @endforeach
                 @endif
             </tbody>
@@ -74,8 +71,4 @@
             {{ $commandes->links() }}
         </div>
     </div>
-
-
-
-
 </x-base>

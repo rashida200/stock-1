@@ -1,6 +1,11 @@
-
-<!-- bons-avoir/index.blade.php -->
 <x-base>
+    @section('title', 'Bon d\'avoir')
+
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="container">
         <h1>Liste des Bons d'Avoir</h1>
 
@@ -46,11 +51,16 @@
                                     <a href="{{ route('bons-avoir.print', $ba) }}" class="btn btn-sm btn-success" target="_blank">
                                         <i class="fas fa-print"></i>
                                     </a>
+
+                                    <a href="{{ route('bons-avoir.printlogo', $ba) }}" class="btn btn-sm" target="_blank" style="background-color: #ccc; color: #000;">
+                                        <i class="fa-regular fa-images"></i>
+                                    </a>
                                     @if($ba->statut === 'en_attente')
                                         <a href="{{ route('factures-avoir.create', ['bon_avoir' => $ba->id]) }}"
                                            class="btn btn-sm btn-primary">
                                             Créer Facture
                                         </a>
+
                                     @endif
                                 </td>
                             </tr>

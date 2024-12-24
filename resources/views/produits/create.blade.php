@@ -55,8 +55,11 @@
                     <!-- TVA Field -->
                     <div class="mb-3">
                         <label for="tva" class="form-label">TVA (%)</label>
-                        <input type="number" step="0.01" class="form-control" id="tva" name="tva"
-                            required>
+                        <select name="tva" class="form-control me-2" required>
+                            <option value="7">7%</option>
+                            <option value="10">10%</option>
+                            <option value="20">20%</option>
+                        </select>
                     </div>
 
                     <!-- Prix de Vente Field -->

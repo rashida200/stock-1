@@ -112,7 +112,8 @@
 </head>
 <body>
     <div class="header">
-        <h1>Facture N° {{ $facture->numero_facture }}</h1>
+        <img src="{{ public_path('images/logo.png') }}" alt="Logo" style="height: 50px;">
+        <h1>Facture {{ $facture->numero_facture }}</h1>
     </div>
 
     <div class="header-logo">

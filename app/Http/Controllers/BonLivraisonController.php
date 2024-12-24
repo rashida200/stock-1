@@ -104,6 +104,17 @@ class BonLivraisonController extends Controller
 
         return $pdf->download($filename);
     }
+    public function printlogo(BonLivraison $bonLivraison)
+    {
+        // Ensure all necessary relationships are loaded
+        $bonLivraison->load('details.produit');
+
+        $pdf = Pdf::loadView('bons-livraison.printlogo', compact('bonLivraison'));
+
+        $filename = 'bon_livraison_' . $bonLivraison->numero_bl . '.pdf';
+
+        return $pdf->download($filename);
+    }
 
 
     public function edit($id)

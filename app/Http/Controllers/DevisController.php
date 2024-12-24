@@ -112,6 +112,17 @@ class DevisController extends Controller
 
         return $pdf->stream("devis_{$devis->id}.pdf");
     }
+    public function printlogo($id)
+    {
+        $devis = Devis::with(['client', 'details.produit'])->findOrFail($id);
+
+        $totalHt = $devis->details->sum('total_ligne_ht');
+        $totalTtc = $devis->details->sum('total_ligne_ttc');
+
+        $pdf = Pdf::loadView('devis.printlogo', compact('devis', 'totalHt', 'totalTtc'));
+
+        return $pdf->stream("devis_{$devis->id}.pdf");
+    }
 
     public function update(Request $request, $id)
 {

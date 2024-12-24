@@ -63,12 +63,16 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('bons-commande', BonCommandeController::class);
     Route::get('/bons-commande/{bonCommande}/print', [BonCommandeController::class, 'print'])->name('bons-commande.print');
+    Route::get('/bons-commande/{bonCommande}/printlogo', [BonCommandeController::class, 'printlogo'])->name('bons-commande.printlogo');
 
     Route::resource('devis', DevisController::class);
     Route::get('/devis/{id}/print', [DevisController::class, 'print'])->name('devis.print');
+    Route::get('/devis/{id}/printlogo', [DevisController::class, 'printlogo'])->name('devis.printlogo');
+
 
     Route::resource('/bons-livraison', BonLivraisonController::class);
     Route::get('/bons-livraison/{bonLivraison}/print', [BonLivraisonController::class, 'print'])->name('bons-livraison.print');
+    Route::get('/bons-livraison/{bonLivraison}/printlogo', [BonLivraisonController::class, 'printlogo'])->name('bons-livraison.printlogo');
 
     Route::resource('commandes', CommandeClientController::class);
 
@@ -77,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('factures', FactureController::class);
     Route::get('/factures/{facture}/print', [FactureController::class, 'print'])->name('factures.print');
+    Route::get('/factures/{facture}/printlogo', [FactureController::class, 'printlogo'])->name('factures.printlogo');
 
 
     Route::resource('banques', BanqueController::class);
@@ -87,6 +92,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('bons-avoir', BonAvoirController::class);
     Route::get('bons-avoir/{bonAvoir}/print', [BonAvoirController::class, 'print'])
         ->name('bons-avoir.print');
+        Route::resource('bons-avoir', BonAvoirController::class);
+        Route::get('bons-avoir/{bonAvoir}/printlogo', [BonAvoirController::class, 'printlogo'])
+            ->name('bons-avoir.printlogo');
 
     // Factures d'Avoir Routes
     Route::get('/factures-avoir', [FactureAvoirController::class, 'index'])
@@ -103,4 +111,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/factures-avoir/{factureAvoir}/print', [FactureAvoirController::class, 'print'])
         ->name('factures-avoir.print');
+
+    Route::get('/factures-avoir/{factureAvoir}/printlogo', [FactureAvoirController::class, 'printlogo'])
+        ->name('factures-avoir.printlogo');
 });

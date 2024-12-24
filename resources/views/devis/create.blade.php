@@ -1,4 +1,8 @@
 <x-base>
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    @endif
     <div class="container">
         <h1>Créer un Devis</h1>
 

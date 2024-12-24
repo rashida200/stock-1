@@ -1,6 +1,9 @@
-<!-- resources/views/devis/index.blade.php -->
-
 <x-base>
+    @section('title', 'Devis')
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    @endif
     <div class="container">
         <h1>Liste des Devis</h1>
         @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
@@ -11,8 +14,8 @@
 
         <div class="card">
             <div class="card-body">
-                <table class="table">
-                    <thead>
+                <table class="table table-sm text-center">
+                    <thead >
                         <tr>
                             <th>ID</th>
                             <th>Client</th>
@@ -37,13 +40,17 @@
                                 <td>{{ number_format($devi->total_ttc, 2) }} DH</td>
                                 @if (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
                                 <td>
-                                    <a href="{{ route('devis.edit', $devi->id) }}" class="btn btn-sm btn-success">
-                                        Modifier
+                                    <a href="{{ route('devis.edit', $devi->id) }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i>
                                     </a>
 
                                     <a href="{{ route('devis.print', $devi->id) }}" class="btn btn-sm btn-success"
                                         target="_blank">
-                                        Imprimer PDF
+                                        <i class="fa fa-print"></i>
+                                    </a>
+                                    <a href="{{ route('devis.printlogo', $devi->id) }}" class="btn btn-sm" style="background-color: #ccc; color: #000;"
+                                        target="_blank">
+                                        <i class="fa fa-images"></i>
                                     </a>
                                 </td>
                                 @endif

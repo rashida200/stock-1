@@ -4,7 +4,7 @@
             <form action="{{ route('admin.fournisseurs.store') }}" method="POST">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLabel">Add New Fournisseur</h5>
+                    <h5 class="modal-title" id="createModalLabel">Ajouter nouveau fournisseur</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

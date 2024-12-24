@@ -9,7 +9,7 @@
                 <h5>Informations sur la Commande</h5>
                 <p><strong>Référence :</strong> {{ $commande->formatId() }}</p>
                 <p><strong>Statut :</strong> {{ $commande->statut }}</p>
-                <p><strong>Montant Total :</strong> {{ number_format($commande->montant_total, 2) }} MAD</p>
+                <p><strong>Montant Total :</strong> {{ number_format($commande->montant_total, 2) }} DH</p>
             </div>
             <hr>
             <!-- Informations sur le client -->
@@ -43,5 +43,5 @@
             </div>
         </div>
     </div>
-    
+
 </x-base>

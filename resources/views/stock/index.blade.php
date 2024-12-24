@@ -1,13 +1,13 @@
 <x-base>
     @section('title', 'Stock')
     <div class="container">
-        <h1 class="mb-4">Stock Management</h1>
+        <h1 class="mb-4">Gestion de Stock</h1>
 
         <!-- Search Form -->
         <form method="GET" action="{{ route('stock.index') }}" class="mb-4">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Search stock..." value="{{ request('search') }}">
-                <button class="btn btn-primary" type="submit">Search</button>
+                <input type="text" name="search" class="form-control" placeholder="Chercher dans le stock..." value="{{ request('search') }}">
+                <button class="btn btn-primary" type="submit">Rechercher</button>
             </div>
         </form>
 
@@ -18,10 +18,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Reference</th>
-                    <th>Designation</th>
-                    <th>Quantity</th>
-                    <th>Initial Quantity</th>
+                    <th>Référence</th>
+                    <th>Désignation</th>
+                    <th>Quantité</th>
+                    <th>Quantité initiale</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,7 +34,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center">No products found.</td>
+                        <td colspan="5" class="text-center">Aucun Produit trouvé</td>
                     </tr>
                 @endforelse
             </tbody>

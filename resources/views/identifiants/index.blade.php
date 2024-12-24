@@ -1,4 +1,5 @@
 <x-base>
+    @section('title', 'Identifiant')
 <div class="container">
     {{-- Vous pouvez modifier le style de la carte ici --}}
     <div class="card">

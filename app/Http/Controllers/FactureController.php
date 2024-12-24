@@ -62,6 +62,14 @@ class FactureController extends Controller
 
         return $pdf->download('facture_' . $facture->numero_facture . '.pdf');
     }
+    public function printlogo(Facture $facture)
+    {
+        $facture->load('bonsLivraison.details.produit');
+
+        $pdf = PDF::loadView('factures.printlogo', compact('facture'));
+
+        return $pdf->download('facture_' . $facture->numero_facture . '.pdf');
+    }
 
     public function edit(Facture $facture)
     {

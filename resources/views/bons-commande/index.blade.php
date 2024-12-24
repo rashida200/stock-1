@@ -1,5 +1,11 @@
 <x-base>
+    @section('title', 'Bon de commande')
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="container">
         <h1>Liste des Bons de Commande</h1>
         @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
@@ -36,14 +42,17 @@
                                 <td>{{ $bc->statut }}</td>
                                 @if (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
                                 <td>
-                                    <a href="{{ route('bons-commande.edit', $bc->id) }}" class="btn btn-sm btn-success">
-                                       modifier
+                                    <a href="{{ route('bons-commande.edit', $bc->id) }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i>
                                     </a>
 
                                     <a href="{{ route('bons-commande.print', $bc) }}" class="btn btn-sm btn-success"
                                         target="_blank">
-                                        Imprimer PDF
+                                        <i class="fas fa-print"></i>
                                     </a>
+                                    <a href="{{ route('bons-commande.printlogo', $bc) }}" class="btn btn-sm " style="background-color: #ccc; color: #000;"
+                                        target="_blank">
+                                        <i class="fa-regular fa-images"></i></a>
 
 
                                 </td>

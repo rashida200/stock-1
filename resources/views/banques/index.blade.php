@@ -1,4 +1,5 @@
 <x-base>
+    @section('title', 'Banques')
 <div class="container">
     <h1>Liste des Banques</h1>
 
@@ -12,7 +13,7 @@
     <a href="{{ route('banques.create') }}" class="btn btn-primary mb-3">Ajouter une nouvelle banque</a>
     @endif
 
-    <table class="table">
+    <table class="table table-sm text-center">
         <thead>
             <tr>
                 <th>ID</th>

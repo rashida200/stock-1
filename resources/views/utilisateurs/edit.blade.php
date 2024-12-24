@@ -6,12 +6,12 @@
                 @csrf
                 @method('PUT')
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel-{{ $user->id }}">Edit User</h5>
+                    <h5 class="modal-title" id="editModalLabel-{{ $user->id }}">Modifier utilisateur</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="name-{{ $user->id }}" class="form-label">Name</label>
+                        <label for="name-{{ $user->id }}" class="form-label">Nom</label>
                         <input type="text" class="form-control" id="name-{{ $user->id }}" name="name" value="{{ $user->name }}" required>
                     </div>
                     <div class="mb-3">
@@ -28,8 +28,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </div>
             </form>
         </div>

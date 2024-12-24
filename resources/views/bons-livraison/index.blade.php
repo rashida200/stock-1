@@ -1,5 +1,12 @@
 <x-base>
+    @section('title', 'Bon de livraison')
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
 
+    @endif
+    </div>
     <div class="container">
         <h1>Liste des Bons de Livraison</h1>
         @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
@@ -35,13 +42,17 @@
                                 <td>{{ number_format($bl->total_ttc, 2) }} DH</td>
                                 @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
                                 <td>
-                                    <a href="{{ route('bons-livraison.edit', $bl->id) }}" class="btn btn-sm btn-success">
-                                        <i class="fas fa-edit"></i> Modifier
+                                    <a href="{{ route('bons-livraison.edit', $bl->id) }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="{{ route('bons-livraison.print', $bl) }}" class="btn btn-sm btn-success"
                                         target="_blank">
-                                        Imprimer PDF
+                                        <i class="fas fa-print"></i>
                                     </a>
+                                    <a href="{{ route('bons-livraison.printlogo', $bl) }}" class="btn btn-sm"
+                                    target="_blank" style="background-color: #ccc; color: #000;">
+                                        <i class="fa fa-images"></i>
+                                </a>
 
 
                                 </td>

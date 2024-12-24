@@ -131,4 +131,10 @@ class BonAvoirController extends Controller
         $pdf = Pdf::loadView('bons-avoir.pdf', compact('bonAvoir'));
         return $pdf->download('bon_avoir_' . $bonAvoir->numero_ba . '.pdf');
     }
+
+    public function printlogo(BonAvoir $bonAvoir)
+    {
+        $pdf = Pdf::loadView('bons-avoir.printlogo', compact('bonAvoir'));
+        return $pdf->download('bon_avoir_' . $bonAvoir->numero_ba . '.pdf');
+    }
 }

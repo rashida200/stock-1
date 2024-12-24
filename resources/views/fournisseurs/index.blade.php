@@ -1,5 +1,10 @@
 <x-base>
     @section('title', 'Fournisseurs')
+    @if  (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
     <div class="table-responsive small">
         <div class="d-flex justify-content-between align-items-center mb-3">
             @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
@@ -8,10 +13,10 @@
             </button>
             @endif
             <form action="{{ route('admin.fournisseurs') }}" method="GET" class="d-flex">
-                <input type="text" name="search" class="form-control me-2" placeholder="Search by Nom or License"
+                <input type="text" name="search" class="form-control me-2" placeholder="Rechercher par Nom ou ICE"
                     value="{{ $search ?? '' }}">
-                <button type="submit" class="btn btn-outline-primary">Search</button>
-                <a href="{{ route('admin.fournisseurs') }}" class="btn btn-outline-secondary">Reset</a>
+                <button type="submit" class="btn btn-outline-primary">Rechercher</button>
+                <a href="{{ route('admin.fournisseurs') }}" class="btn btn-outline-secondary">Retour</a>
             </form>
         </div>
 
@@ -58,7 +63,7 @@
                                     <a href="{{ route('fournisseurs.history', $fournisseur) }}" class="btn btn-primary btn-sm" title="Historique"><i class="fas fa-history"></i></a>
                                     <form action="{{ route('admin.fournisseurs.destroy', $fournisseur->id) }}"
                                         method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this fournisseur?')">
+                                        onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce fournisseur ?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm" title="Supprimer">

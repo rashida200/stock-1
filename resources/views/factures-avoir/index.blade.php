@@ -1,5 +1,11 @@
-<!-- resources/views/factures-avoir/index.blade.php -->
+
 <x-base>
+    @section('title', 'Facture d\'avoir')
+   @if  (session('success'))
+   <div class="alert alert-success">
+       {{ session('success') }}
+   </div>
+   @endif
     <div class="container mt-4">
         <h1>Liste des Factures d'Avoir</h1>
 
@@ -36,6 +42,10 @@
                                         target="_blank">
                                         <i class="fas fa-print"></i>
                                     </a>
+                                    <a href="{{ route('factures-avoir.printlogo', $facture) }}" class="btn btn-sm "style="background-color: #ccc; color: #000;"
+                                    target="_blank">
+                                    <i class="fa fa-images"></i>
+                                </a>
                                 </td>
                             </tr>
                         @endforeach

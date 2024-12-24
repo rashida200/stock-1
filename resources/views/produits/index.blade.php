@@ -11,18 +11,18 @@
                 <input type="text" name="search" class="form-control me-2"
                     placeholder="Rechercher par référence ou désignation" value="{{ $search ?? '' }}">
                 <button type="submit" class="btn btn-outline-primary me-2">Rechercher</button>
-                <a href="{{ route('produits.index') }}" class="btn btn-outline-secondary">Reset</a>
+                <a href="{{ route('produits.index') }}" class="btn btn-outline-secondary">Retour</a>
             </form>
         </div>
         <table class="table table-sm text-center">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col">Reference</th>
-                    <th scope="col">Designation</th>
-                    <th scope="col">quantité</th>
-                    <th scope="col">quantité initial</th>
+                    <th scope="col">Référence</th>
+                    <th scope="col">Désignation</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Quantité initial</th>
                     <th scope="col">Prix d'achat</th>
-                    <th scope="col">tva</th>
+                    <th scope="col">TVA</th>
                     <th scope="col">Prix d'achat TTC</th>
                     <th scope="col">Prix de Vente</th>
                     <th scope="col">Total HT</th>
@@ -62,7 +62,7 @@
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <form action="{{ route('produits.destroy', $produit->id) }}" method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this Produit?')">
+                                        onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm" title="Supprimer">

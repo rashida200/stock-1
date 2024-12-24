@@ -24,7 +24,7 @@
                         <input type="text" class="form-control" id="cin" name="cin">
                     </div>
                     <div class="mb-3">
-                        <label for="lice" class="form-label">LICE</label>
+                        <label for="lice" class="form-label">ICE</label>
                         <input type="text" class="form-control" id="lice" name="lice">
                     </div>
                     <div class="mb-3">

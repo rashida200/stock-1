@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Facture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bon de Commande</title>
     <style>
         /* General Styles */
         body {
@@ -36,18 +37,15 @@
         .header-logo {
             flex: 1;
             text-align: right;
-            color: black;
         }
 
         .header-info {
             flex: 1;
             text-align: right;
-            color: black;
         }
 
         .header-info p {
             margin: 3px 0;
-            color: black;
         }
 
         /* Footer Section */
@@ -111,28 +109,24 @@
     </style>
 </head>
 <body>
+
+    <!-- Company Header -->
     <div class="header">
-        <h1>Facture N° {{ $facture->numero_facture }}</h1>
-    </div>
-
-    <div class="header-logo">
-        <x-company-header />
-    </div>
-
-    <div class="header-info">
-        <p><strong>Client:</strong> {{ $facture->client->nom }}</p>
-        <p><strong>Adresse:</strong>{{ $facture->client->adresse }}</p>
-        <p><strong>Téléphone:</strong>{{ $facture->client->telephone }}</p>
-        <p><strong>Date:</strong> {{ $facture->date_facture }}</p>
-    </div>
-
-    <div>
-        <h3 style="color: black">Bons de livraison associés:</h3>
-        <ul>
-            @foreach($facture->bonsLivraison as $bl)
-                <li>{{ $bl->numero_bl }} ({{ $bl->date_livraison }})</li>
-            @endforeach
-        </ul>
+        <img src="{{ public_path('images/logo.png') }}" alt="Logo" style="height: 50px;">
+        <h1>Bon de commande</h1>
+            <p><strong>N° BC:</strong> {{ $bonCommande->numero_bc }}</p>
+        <!-- Left Section: Company Header -->
+        <div class="header-logo">
+            <x-company-header />
+        </div>
+        <!-- Right Section: Order Details -->
+        <div class="header-info">
+            <p><strong>Fournisseur:</strong> {{ $bonCommande->fournisseur->nom }}</p>
+            <p><strong>Adresse:</strong>{{$bonCommande->fournisseur->adresse }}</p>
+            <p><strong>Téléphone:</strong>{{$bonCommande->fournisseur->telephone }}</p>
+            <p><strong>ICE:</strong>{{$bonCommande->fournisseur->lice }}</p>
+            <p><strong>Date:</strong> {{ $bonCommande->date_commande }}</p>
+        </div>
     </div>
 
     <table class="print">
@@ -148,28 +142,38 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($facture->bonsLivraison as $bl)
-                @foreach($bl->details as $detail)
-                    <tr>
-                        <td>{{ $detail->produit->reference }}</td>
-                        <td>{{ $detail->produit->designation }}</td>
-                        <td>{{ $detail->quantite }}</td>
-                        <td>{{ number_format($detail->prix_unitaire_ht, 2) }} DH</td>
-                        <td>{{ $detail->tva }}%</td>
-                        <td>{{ number_format($detail->total_ligne_ht, 2) }} DH</td>
-                        <td>{{ number_format($detail->total_ligne_ttc, 2) }} DH</td>
-                    </tr>
-                    @endforeach
-                @endforeach
-            </tbody>
-        </table>
+            @foreach($bonCommande->details as $detail)
+                <tr>
+                    <td>{{ $detail->reference_produit }}</td>
+                    <td>{{ $detail->produit->designation ?? 'N/A' }}</td>
+                    <td>{{ $detail->quantite }}</td>
+                    <td>{{ number_format($detail->prix_unitaire_ht, 2) }} DH</td>
+                    <td>{{ number_format($detail->tva, 2) }}%</td>
+                    <td>{{ number_format($detail->total_ligne_ht, 2) }} DH</td>
+                    <td>{{ number_format($detail->total_ligne_ttc, 2) }} DH</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 
-        <div class="total-section">
-            <p><strong>Total HT:</strong> {{ number_format($facture->total_ht, 2) }} DH</p>
-            <p><strong>Total TTC:</strong> {{ number_format($facture->total_ttc, 2) }} DH</p>
+    <div class="total-section">
+        <p><strong>Total HT:</strong> {{ number_format($bonCommande->total_ht, 2) }} DH</p>
+        <p><strong>Total TTC:</strong> {{ number_format($bonCommande->total_ttc, 2) }} DH</p>
+    </div>
+    <!-- Signature Section -->
+<div class="signature-section" style="margin-top: 40px;">
+    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <div style="text-align: left;">
+            <p><strong>Validé par :</strong></p>
+            <p>Nom et Prénom :</p>
+            <p>Signature :</p>
         </div>
-        <div class="footer">
-            <x-company-footer/>
-        </div>
-    </body>
-    </html>
+    </div>
+</div>
+    <!-- Company Footer -->
+    <div class="footer">
+        <x-company-footer />
+    </div>
+
+</body>
+</html>

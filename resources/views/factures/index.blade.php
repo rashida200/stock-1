@@ -1,4 +1,9 @@
 <x-base>
+    @section('title', 'Facture')
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    @endif
     <div class="container">
         <h1>Liste des Factures</h1>
      @if (auth()->user()->type === 'admin' ||auth()->user()->type === 'commercial')
@@ -32,12 +37,15 @@
                                 <td>{{ $facture->statut }}</td>
                                 <td>
                                     @if (auth()->user()->type === 'admin')
-                                    <a href="{{ route('factures.edit', $facture) }}" class="btn btn-sm btn-success">
-                                        <i class="fas fa-edit"></i> Modifier
+                                    <a href="{{ route('factures.edit', $facture) }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i>
                                     </a>
                                     @endif
                                     <a href="{{ route('factures.print', $facture) }}" class="btn btn-sm btn-success" target="_blank">
-                                        Imprimer PDF
+                                        <i class="fas fa-print"></i>
+                                    </a>
+                                    <a href="{{ route('factures.printlogo', $facture) }}" class="btn btn-sm" style="background-color: #ccc; color: #000;" target="_blank">
+                                        <i class="fa fa-images"></i>
                                     </a>
                                 </td>
                             </tr>

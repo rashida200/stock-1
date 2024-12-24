@@ -80,11 +80,16 @@ class BonCommandeController extends Controller
         ->with('success', 'Bon de commande créé avec succès.');
 
 }
+    public function printlogo(BonCommande $bonCommande)
+{
+    $bonCommande->load('details.produit'); // Load details and associated products (designation and tva)
+    $pdf = Pdf::loadView('bons-commande.printlogo', compact('bonCommande'));
 
+    // Optionally, customize the filename
+    $filename = 'bon_commande_' . $bonCommande->numero_bc . '.pdf';
 
-
-
-
+    return $pdf->download($filename); // Download the PDF
+}
 
     public function print(BonCommande $bonCommande)
     {

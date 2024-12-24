@@ -44,6 +44,38 @@ class FactureAvoirController extends Controller
         return back()->with('error', 'Erreur lors de la génération du PDF: ' . $e->getMessage());
     }
 }
+public function printlogo(FactureAvoir $factureAvoir)
+{
+    try {
+        $factureAvoir->load([
+            'bonAvoir',
+            'bonAvoir.client',
+            'bonAvoir.details.produit',
+            'bonAvoir.bonLivraison'
+        ]);
+
+        // Configure PDF options
+        $pdf = PDF::loadView('factures-avoir.printlogo', compact('factureAvoir'));
+
+        // Set paper to A4
+        $pdf->setPaper('a4');
+
+        // Set other PDF options if needed
+        $pdf->setOptions([
+            'isPhpEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'dpi' => 150,
+            'defaultFont' => 'arial'
+        ]);
+
+        // Return the PDF for download
+        return $pdf->download('facture_avoir_' . $factureAvoir->numero_facture_avoir . '.pdf');
+    } catch (\Exception $e) {
+        Log::error('Error generating Facture Avoir PDF: ' . $e->getMessage());
+        return back()->with('error', 'Erreur lors de la génération du PDF: ' . $e->getMessage());
+    }
+}
     public function index()
     {
         $facturesAvoir = FactureAvoir::with(['bonAvoir.client'])
