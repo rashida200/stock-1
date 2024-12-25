@@ -31,7 +31,7 @@
             padding: 10px 20px;
             /* background-color: #0056b3; */
             color: black;
-            font-weight: bold;
+            /* font-weight: bold; */
         }
 
         .header-logo {
@@ -50,16 +50,16 @@
 
         /* Footer Section */
         .footer {
-            text-align: center;
-            padding: 10px;
-            /* background-color: #0056b3; */
-            color: black;
-            font-weight: bold;
-            position: absolute;
+            position: fixed;
             bottom: 0;
             left: 0;
-            width: 100%;
-            box-sizing: border-box;
+            right: 0;
+            height: 2cm;
+            padding: 20px 2cm;
+            text-align: center;
+            font-size: 10px;
+            background-color: #f8fafc;
+            border-top: 1px solid #eee;
         }
 
         /* Table Styles */
@@ -78,8 +78,10 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #2c5282;
             font-weight: bold;
+            color: white;
+
         }
 
         td {
@@ -104,6 +106,9 @@
             .header-info {
                 text-align: left;
                 margin-top: 10px;
+                border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f8fafc;
             }
         }
     </style>
@@ -124,7 +129,7 @@
             <p><strong>Adresse:</strong>{{$bonCommande->fournisseur->adresse }}</p>
             <p><strong>Téléphone:</strong>{{$bonCommande->fournisseur->telephone }}</p>
             <p><strong>ICE:</strong>{{$bonCommande->fournisseur->lice }}</p>
-            <p><strong>Date:</strong> {{ $bonCommande->date_commande }}</p>
+            <p><strong>Date:</strong>{{ $bonCommande->date_commande }}</p>
         </div>
     </div>
 

@@ -23,8 +23,10 @@
                             <th>Total HT</th>
                             <th>Total TTC</th>
                             <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
+
+                        </tr> @if (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
+                        <th>Actions</th>
+                        @endif
                     </thead>
                     <tbody>
                         @foreach ($factures as $facture)
@@ -41,12 +43,15 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     @endif
-                                    <a href="{{ route('factures.print', $facture) }}" class="btn btn-sm btn-success" target="_blank">
-                                        <i class="fas fa-print"></i>
-                                    </a>
-                                    <a href="{{ route('factures.printlogo', $facture) }}" class="btn btn-sm" style="background-color: #ccc; color: #000;" target="_blank">
-                                        <i class="fa fa-images"></i>
-                                    </a>
+                                   @if  (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
+                                   <a href="{{ route('factures.print', $facture) }}" class="btn btn-sm btn-success" target="_blank">
+                                    <i class="fas fa-print"></i>
+                                </a>
+                                <a href="{{ route('factures.printlogo', $facture) }}" class="btn btn-sm" style="background-color: #ccc; color: #000;" target="_blank">
+                                    <i class="fa fa-images"></i>
+                                </a>
+
+                                   @endif
                                 </td>
                             </tr>
                         @endforeach

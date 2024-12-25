@@ -48,13 +48,13 @@
                                     <a href="{{ route('bons-avoir.show', $ba) }}" class="btn btn-sm btn-info">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('bons-avoir.print', $ba) }}" class="btn btn-sm btn-success" target="_blank">
-                                        <i class="fas fa-print"></i>
-                                    </a>
+                                    @if  (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
+                                        <a href="{{ route('bons-avoir.print', $ba) }}" class="btn btn-sm btn-success" target="_blank">
+                                            <i class="fas fa-print"></i></a>
 
-                                    <a href="{{ route('bons-avoir.printlogo', $ba) }}" class="btn btn-sm" target="_blank" style="background-color: #ccc; color: #000;">
-                                        <i class="fa-regular fa-images"></i>
-                                    </a>
+                                        <a href="{{ route('bons-avoir.printlogo', $ba) }}" class="btn btn-sm" target="_blank" style="background-color: #ccc; color: #000;">
+                                            <i class="fa-regular fa-images"></i></a>
+                                    @endif
                                     @if($ba->statut === 'en_attente')
                                         <a href="{{ route('factures-avoir.create', ['bon_avoir' => $ba->id]) }}"
                                            class="btn btn-sm btn-primary">

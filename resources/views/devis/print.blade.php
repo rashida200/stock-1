@@ -31,7 +31,6 @@
             padding: 10px 20px;
             /* background-color: #0056b3; */
             color: black;
-            font-weight: bold;
         }
 
         .header-logo {
@@ -43,25 +42,34 @@
         .header-info {
             flex: 1;
             text-align: right;
-            color: black;
+            color: rgb(255, 255, 255);
+
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 90px 0;
+            background-color: #f8fafc;
+
         }
 
         .header-info p {
             margin: 3px 0;
             color: black;
+            padding: 10px;
+
         }
 
         /* Footer Section */
         .footer {
-            text-align: center;
-            padding: 10px;
-            color: black;
-            font-weight: bold;
-            position: absolute;
+            position: fixed;
             bottom: 0;
             left: 0;
-            width: 100%;
-            box-sizing: border-box;
+            right: 0;
+            height: 2cm;
+            padding: 20px 2cm;
+            text-align: center;
+            font-size: 10px;
+            background-color: #f8fafc;
+            border-top: 1px solid #eee;
         }
 
         /* Table Styles */
@@ -70,7 +78,7 @@
             border-collapse: collapse;
             margin-top: 20px;
             background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(254, 254, 254, 0.842);
         }
 
         th, td {
@@ -80,8 +88,9 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #2C5282;
             font-weight: bold;
+            color: white;
         }
 
         td {
@@ -105,9 +114,10 @@
 
             .header-info {
                 text-align: left;
-                margin-top: 10px;
+                margin-top: 15px;
             }
         }
+
     </style>
 </head>
 <body>

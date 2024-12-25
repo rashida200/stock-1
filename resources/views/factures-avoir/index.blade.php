@@ -38,14 +38,15 @@
                                     <a href="{{ route('factures-avoir.show', $facture) }}" class="btn btn-sm btn-info">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('factures-avoir.print', $facture) }}" class="btn btn-sm btn-success"
-                                        target="_blank">
-                                        <i class="fas fa-print"></i>
-                                    </a>
-                                    <a href="{{ route('factures-avoir.printlogo', $facture) }}" class="btn btn-sm "style="background-color: #ccc; color: #000;"
-                                    target="_blank">
+                                 @if  (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
+                                 <a href="{{ route('factures.print', $facture) }}" class="btn btn-sm btn-success" target="_blank">
+                                    <i class="fas fa-print"></i>
+                                </a>
+                                <a href="{{ route('factures.printlogo', $facture) }}" class="btn btn-sm" style="background-color: #ccc; color: #000;" target="_blank">
                                     <i class="fa fa-images"></i>
                                 </a>
+
+                                 @endif
                                 </td>
                             </tr>
                         @endforeach
