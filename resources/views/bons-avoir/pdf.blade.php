@@ -12,6 +12,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            margin-top: 30px;
         }
 
         .content {
@@ -60,18 +61,7 @@
             border: 1px solid #ddd;
         }
 
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2cm;
-            padding: 20px 2cm;
-            text-align: center;
-            font-size: 10px;
-            background-color: #f8fafc;
-            border-top: 1px solid #eee;
-        }
+
         .company-header{
             text-align: right;
             float: right;
@@ -101,9 +91,7 @@
             </div>
 
         </div>
-        <div class="company-header">
-            <x-company-header />
-        </div>
+
         <div class="client-info">
             <h3>Informations Client</h3>
             <p>Nom: {{ $bonAvoir->client->nom }}</p>
@@ -165,8 +153,6 @@
         </div>
     </div>
 
-    <div class="footer">
-        <x-company-footer />
-    </div>
+
 </body>
 </html>

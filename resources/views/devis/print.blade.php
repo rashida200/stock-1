@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devis #{{ $devis->id }}</title>
+    <title>Devis N°{{ $devis->id }}</title>
     <style>
         /* General Styles */
         body {
@@ -11,7 +11,7 @@
             font-size: 14px;
             margin: 0;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: white;
             color: #333;
             min-height: 100vh;
             position: relative;
@@ -29,8 +29,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            /* background-color: #0056b3; */
             color: black;
+            margin-top: 40px;
         }
 
         .header-logo {
@@ -58,19 +58,7 @@
 
         }
 
-        /* Footer Section */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2cm;
-            padding: 20px 2cm;
-            text-align: center;
-            font-size: 10px;
-            background-color: #f8fafc;
-            border-top: 1px solid #eee;
-        }
+
 
         /* Table Styles */
         table {
@@ -121,14 +109,13 @@
     </style>
 </head>
 <body>
+
     <div class="header">
         <h2>DEVIS N° {{ $devis->id }}</h2>
         <p>Date : {{ date('d/m/Y', strtotime($devis->date_devis)) }}</p>
     </div>
 
-    <div class="header-logo">
-        <x-company-header />
-    </div>
+
 
     <div class="header-info">
         <p><strong>Client :</strong> {{ $devis->client->nom }}</p>
@@ -179,9 +166,6 @@
                 <p>Signature :</p>
             </div>
         </div>
-    </div>
-    <div class="footer">
-        <x-company-footer />
-    </div>
+
 </body>
 </html>

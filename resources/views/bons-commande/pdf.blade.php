@@ -11,7 +11,7 @@
             font-size: 14px;
             margin: 0;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: white;
             color: #333;
             min-height: 100vh;
             position: relative;
@@ -28,7 +28,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
+            padding: 80px 20px;
             /* background-color: #0056b3; */
             color: black;
             /* font-weight: bold; */
@@ -48,19 +48,7 @@
             margin: 3px 0;
         }
 
-        /* Footer Section */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2cm;
-            padding: 20px 2cm;
-            text-align: center;
-            font-size: 10px;
-            background-color: #f8fafc;
-            border-top: 1px solid #eee;
-        }
+
 
         /* Table Styles */
         table {
@@ -119,10 +107,6 @@
     <div class="header">
         <h1>Bon de commande</h1>
             <p><strong>N° BC:</strong> {{ $bonCommande->numero_bc }}</p>
-        <!-- Left Section: Company Header -->
-        <div class="header-logo">
-            <x-company-header />
-        </div>
         <!-- Right Section: Order Details -->
         <div class="header-info">
             <p><strong>Fournisseur:</strong> {{ $bonCommande->fournisseur->nom }}</p>
@@ -174,10 +158,7 @@
         </div>
     </div>
 </div>
-    <!-- Company Footer -->
-    <div class="footer">
-        <x-company-footer />
-    </div>
+
 
 </body>
 </html>

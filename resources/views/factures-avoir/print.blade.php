@@ -132,22 +132,14 @@
     </style>
 </head>
 <body>
-    <div class="header">
+
         <div class="company-logo">
-            <!-- Replace with your company logo -->
+            <img src="{{ public_path('images/logo.png') }}" alt="LogoHHHHHHHHH" style="height: 50px;">
             <h2>VOTRE ENTREPRISE</h2>
         </div>
-        <div class="company-info">
-            <p><strong>VOTRE ENTREPRISE SARL</strong></p>
-            <p>123, Zone Industrielle</p>
-            <p>Ville, Maroc</p>
-            <p>Tél: +212 5XX-XXXXXX</p>
-            <p>Email: contact@entreprise.ma</p>
-            <p>ICE: 00XXXXX00000XX</p>
-            <p>IF: XXXXXXX</p>
-            <p>RC: XXXXX</p>
-        </div>
-    </div>
+
+    <x-company-header>
+
 
     <div class="invoice-type">
         FACTURE D'AVOIR N° {{ $factureAvoir->numero_facture_avoir }}
@@ -226,18 +218,8 @@
         </table>
     </div>
 
-    <div class="payment-info">
-        <h4>Informations bancaires:</h4>
-        <p>Banque: XXXXXXXXXXXX</p>
-        <p>RIB: XXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
-    </div>
-
     <div class="footer">
-        <p><strong>VOTRE ENTREPRISE SARL</strong></p>
-        <p class="small-text">
-            123, Zone Industrielle - Ville, Maroc | Tél: +212 5XX-XXXXXX | Email: contact@entreprise.ma<br>
-            ICE: 00XXXXX00000XX | IF: XXXXXXX | RC: XXXXX | CNSS: XXXXXX
-        </p>
+        <x-company-footer />
     </div>
 </body>
 </html>

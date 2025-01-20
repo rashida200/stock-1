@@ -27,7 +27,7 @@
                                class="form-control @error('company_name') is-invalid @enderror"
                                name="company_name"
                                value="{{ old('company_name', $identification->company_name) }}"
-                               required>
+                               >
                         @error('company_name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -38,7 +38,7 @@
                                class="form-control @error('location') is-invalid @enderror"
                                name="location"
                                value="{{ old('location', $identification->location) }}"
-                               required>
+                               >
                         @error('location')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -49,7 +49,7 @@
                                class="form-control @error('address') is-invalid @enderror"
                                name="address"
                                value="{{ old('address', $identification->address) }}"
-                               required>
+                               >
                         @error('address')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -61,7 +61,7 @@
                                class="form-control @error('email') is-invalid @enderror"
                                name="email"
                                value="{{ old('email', $identification->email) }}"
-                               required>
+                               >
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -72,7 +72,7 @@
                                class="form-control @error('phone1') is-invalid @enderror"
                                name="phone1"
                                value="{{ old('phone1', $identification->phone1) }}"
-                               required>
+                               >
                         @error('phone1')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -83,7 +83,7 @@
                                class="form-control @error('phone2') is-invalid @enderror"
                                name="phone2"
                                value="{{ old('phone2', $identification->phone2) }}"
-                               required>
+                               >
                         @error('phone2')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -94,7 +94,7 @@
                                class="form-control @error('ice') is-invalid @enderror"
                                name="ice"
                                value="{{ old('ice', $identification->ice) }}"
-                               required>
+                               >
                         @error('ice')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -105,7 +105,7 @@
                                class="form-control @error('if') is-invalid @enderror"
                                name="if"
                                value="{{ old('if', $identification->if) }}"
-                               required>
+                               >
                         @error('if')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -116,7 +116,7 @@
                                class="form-control @error('rc') is-invalid @enderror"
                                name="rc"
                                value="{{ old('rc', $identification->rc) }}"
-                               required>
+                               >
                         @error('rc')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -127,7 +127,7 @@
                                class="form-control @error('patente') is-invalid @enderror"
                                name="patente"
                                value="{{ old('patente', $identification->patente) }}"
-                               required>
+                               >
                         @error('patente')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -138,7 +138,7 @@
                                class="form-control @error('cnss') is-invalid @enderror"
                                name="cnss"
                                value="{{ old('cnss', $identification->cnss) }}"
-                               required>
+                               >
                         @error('cnss')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -164,7 +164,7 @@
                     <label for="banque_id">Informations Bancaires</label>
                     <select name="banque_id"
                             class="form-control @error('banque_id') is-invalid @enderror"
-                            required>
+                            >
                         <option value="">Sélectionner une banque</option>
                         @foreach($banks as $bank)
                             <option value="{{ $bank->id }}"

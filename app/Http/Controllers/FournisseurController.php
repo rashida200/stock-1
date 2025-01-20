@@ -50,6 +50,7 @@ class FournisseurController extends Controller
             'lice' => 'required',
             'telephone' => 'required',
             'rib' => 'required',
+            'email' => 'required',
         ]);
 
         Fournisseur::create($request->all());
@@ -84,6 +85,7 @@ class FournisseurController extends Controller
             'nom' => 'required|string|max:255',
             'lice' => 'required|string|max:255',
             'rib' => 'required|string|max:30',
+            'email'=>'required|string|max:30',
         ]);
 
         $fournisseur->update($validatedData);

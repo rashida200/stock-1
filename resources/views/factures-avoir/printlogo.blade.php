@@ -1,3 +1,4 @@
+<!-- resources/views/factures-avoir/print.blade.php -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,7 @@
             right: 0;
             height: 3cm;
             padding: 20px 2cm;
+            border-bottom: 1px solid #eee;
         }
         .company-logo {
             float: left;
@@ -130,14 +132,14 @@
     </style>
 </head>
 <body>
-    <div class="header">
+
         <div class="company-logo">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/logo.png'))) }}" alt="Logo" style="height: 90px;">
+            <img src="{{ public_path('images/logo.png') }}" alt="LogoHHHHHHHHH" style="height: 50px;">
+            <h2>VOTRE ENTREPRISE</h2>
         </div>
-        <div class="company-info">
-          <x-company-header/>
-        </div>
-    </div>
+
+    <x-company-header>
+
 
     <div class="invoice-type">
         FACTURE D'AVOIR N° {{ $factureAvoir->numero_facture_avoir }}
@@ -146,8 +148,7 @@
     <div class="client-box">
         <h4 style="margin: 0 0 10px 0;">CLIENT:</h4>
         <p><strong>{{ $factureAvoir->bonAvoir->client->nom }}</strong></p>
-        <p>ICE: {{ $factureAvoir->bonAvoir->client->lice }}</p>
-        <p>CIN: {{ $factureAvoir->bonAvoir->client->cin }}</p>
+        <p>ICE: {{ $factureAvoir->bonAvoir->client->ice }}</p>
         <p>{{ $factureAvoir->bonAvoir->client->adresse }}</p>
         <p>Tél: {{ $factureAvoir->bonAvoir->client->telephone }}</p>
     </div>
@@ -216,8 +217,9 @@
             </tr>
         </table>
     </div>
+
     <div class="footer">
-       <x-company-footer/>
+        <x-company-footer />
     </div>
 </body>
 </html>

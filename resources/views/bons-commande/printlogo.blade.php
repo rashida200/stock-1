@@ -11,7 +11,7 @@
             font-size: 14px;
             margin: 0;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: white;
             color: #333;
             min-height: 100vh;
             position: relative;
@@ -27,20 +27,33 @@
         .header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            /* background-color: #0056b3; */
+            align-items: flex-start;
+            padding: 10px 10px;
             color: black;
-            /* font-weight: bold; */
+            margin-top: 5px;
+            /* align-items: center; */
+
         }
 
-        .header-logo {
+        .header-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .header-container img {
+            height: 70px;
+            margin-right: 5px; /* Adjust spacing between logo and header */
+        }
+
+        .company-header {
             flex: 1;
-            text-align: right;
+            text-align: center;
+            color: black;
+            margin-top: -50px;
         }
 
         .header-info {
-            flex: 1;
             text-align: right;
         }
 
@@ -81,7 +94,6 @@
             background-color: #2c5282;
             font-weight: bold;
             color: white;
-
         }
 
         td {
@@ -105,37 +117,36 @@
 
             .header-info {
                 text-align: left;
-                margin-top: 10px;
+                margin-top: 30px;
                 border: 1px solid #ddd;
-            padding: 10px;
-            background-color: #f8fafc;
-            line-height: 1.2;
+                padding: 20px;
+                background-color: #f8fafc;
+                line-height: 1.2;
             }
         }
     </style>
 </head>
 <body>
-
-    <!-- Company Header -->
-    <div class="header">
-        <img src="{{ public_path('images/logo.png') }}" alt="Logo" style="height: 50px;">
-        <h1>Bon de commande</h1>
-            <p><strong>N° BC:</strong> {{ $bonCommande->numero_bc }}</p>
-        <!-- Left Section: Company Header -->
-        <div class="header-logo">
+        <img src="{{ public_path('images/logo.png') }}" alt="Logo" style="height: 75px; margin-top: -20px;">
+        <div class="company-header">
             <x-company-header />
         </div>
-        <!-- Right Section: Order Details -->
+
+    <!-- Header Section -->
+    <div class="header">
         <div class="header-info">
+            <h1>Bon de commande</h1>
+            <p><strong>N° BC:</strong> {{ $bonCommande->numero_bc }}</p>
             <p><strong>Fournisseur:</strong> {{ $bonCommande->fournisseur->nom }}</p>
-            <p><strong>Adresse:</strong>{{$bonCommande->fournisseur->adresse }}</p>
-            <p><strong>Téléphone:</strong>{{$bonCommande->fournisseur->telephone }}</p>
-            <p><strong>ICE:</strong>{{$bonCommande->fournisseur->lice }}</p>
-            <p><strong>Date:</strong>{{ $bonCommande->date_commande }}</p>
+            <p><strong>Adresse:</strong> {{ $bonCommande->fournisseur->adresse }}</p>
+            <p><strong>Téléphone:</strong> {{ $bonCommande->fournisseur->telephone }}</p>
+            <p><strong>ICE:</strong> {{ $bonCommande->fournisseur->lice }}</p>
+            <p><strong>Date:</strong> {{ $bonCommande->date_commande }}</p>
         </div>
     </div>
 
-    <table class="print">
+    <!-- Table Section -->
+    <table>
         <thead>
             <tr>
                 <th>Référence</th>
@@ -162,24 +173,26 @@
         </tbody>
     </table>
 
+    <!-- Total Section -->
     <div class="total-section">
         <p><strong>Total HT:</strong> {{ number_format($bonCommande->total_ht, 2) }} DH</p>
         <p><strong>Total TTC:</strong> {{ number_format($bonCommande->total_ttc, 2) }} DH</p>
     </div>
+
     <!-- Signature Section -->
-<div class="signature-section" style="margin-top: 40px;">
-    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-        <div style="text-align: left;">
-            <p><strong>Validé par :</strong></p>
-            <p>Nom et Prénom :</p>
-            <p>Signature :</p>
+    <div class="signature-section" style="margin-top: 40px;">
+        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+            <div style="text-align: left;">
+                <p><strong>Validé par :</strong></p>
+                <p>Nom et Prénom :</p>
+                <p>Signature :</p>
+            </div>
         </div>
     </div>
-</div>
-    <!-- Company Footer -->
+
+    <!-- Footer Section -->
     <div class="footer">
         <x-company-footer />
     </div>
-
 </body>
 </html>

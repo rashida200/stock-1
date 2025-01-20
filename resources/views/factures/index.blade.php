@@ -23,10 +23,10 @@
                             <th>Total HT</th>
                             <th>Total TTC</th>
                             <th>Statut</th>
-
-                        </tr> @if (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
-                        <th>Actions</th>
-                        @endif
+                            @if (auth()->user()->type === 'admin'||auth()->user()->type === 'commercial')
+                            <th>Actions</th>
+                            @endif
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($factures as $facture)
