@@ -97,7 +97,7 @@
 
         .total-section {
             text-align: right;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .total-section strong {
@@ -173,6 +173,14 @@
         <div class="total-section">
             <p><strong>Total HT:</strong> {{ number_format($facture->total_ht, 2) }} DH</p>
             <p><strong>Total TTC:</strong> {{ number_format($facture->total_ttc, 2) }} DH</p>
+        </div>
+        <div class="signature-section" >
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <div style="text-align: left;">
+                    <p><strong>Signature Entreprise :</strong>___________________</p>
+                    <p><strong>Signature Client :</strong>___________________</p>
+                </div>
+            </div>
         </div>
         <div class="footer">
             <x-company-footer/>

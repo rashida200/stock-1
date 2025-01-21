@@ -135,6 +135,8 @@
     <div class="company-info">
         <x-company-header />
     </div>
+    <hr style="color:  #2c5282">
+
     <div class="header">
         <h2>DEVIS N° {{ $devis->id }}</h2>
         <p>Date : {{ date('d/m/Y', strtotime($devis->date_devis)) }}</p>

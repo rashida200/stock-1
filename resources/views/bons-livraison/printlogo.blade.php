@@ -38,7 +38,8 @@
             flex: 1;
             text-align: center;
             color: black;
-            margin-top: -50px;
+            margin-top: -60px;
+            font-weight: 50px;
         }
 
         .header-info {
@@ -193,8 +194,8 @@
 
     <div class="header-logo">
         <x-company-header />
-
     </div>
+    <hr style="color: #2c5282">
     <div class="header">
         <h1>Bon de Livraison</h1>
         <p><strong>N° BL:</strong> {{ $bonLivraison->numero_bl }}</p>

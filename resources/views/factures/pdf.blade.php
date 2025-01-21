@@ -159,6 +159,14 @@
             <p><strong>Total HT:</strong> {{ number_format($facture->total_ht, 2) }} DH</p>
             <p><strong>Total TTC:</strong> {{ number_format($facture->total_ttc, 2) }} DH</p>
         </div>
+        <div class="signature-section" >
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <div style="text-align: left;">
+                    <p><strong>Signature Entreprise :</strong>___________________</p><br><br>
+                    <p><strong>Signature Client :</strong>___________________</p>
+                </div>
+            </div>
+        </div>
 
     </body>
     </html>
