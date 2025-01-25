@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Validation\Rule;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -8,18 +9,17 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function index(Request $request)
-{
-    $search = $request->input('search');
+    {
+        $search = $request->input('search');
 
-    $users = User::where('type', '!=', 'admin') // Optionnel : Exclure les admins
-        ->when($search, function ($query, $search) {
+        $users = User::when($search, function ($query, $search) {
             $query->where('name', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%");
         })
-        ->paginate(10); // Ajustez le nombre de résultats par page
+            ->paginate(10);
 
-    return view('utilisateurs.index', compact('users', 'search'));
-}
+        return view('utilisateurs.index', compact('users', 'search'));
+    }
 
 
 
@@ -45,26 +45,12 @@ class UserController extends Controller
             'type' => $request->type,
         ]);
 
-        return redirect()->route('utilisateurs.index')->with('success', 'User added successfully.');
+        return redirect()->route('utilisateurs.index')->with('success', 'Utilisateur créé avec succès.');
     }
 
-    public function edit(User $user)
-    {
-        return view('utilisateurs.edit', compact('user'));
-    }
 
-    public function update(Request $request, User $user)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'type' => 'required|in:admin,manager,commercial',
-        ]);
 
-        $user->update($request->only('name', 'email', 'type'));
 
-        return redirect()->route('utilisateurs.index')->with('success', 'User updated successfully.');
-    }
 
     public function destroy($id)
     {
@@ -72,4 +58,45 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('utilisateurs.index')->with('success', 'User deleted successfully');
     }
+
+
+
+
+
+
+    public function edit($id)
+{
+    $user = User::findOrFail($id);
+    return view('utilisateurs.edit', compact('user'));
+}
+
+public function update(Request $request, $id)
+{
+    $user = User::findOrFail($id);
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => [
+            'required',
+            'email',
+            Rule::unique('users')->ignore($user->id),
+        ],
+        'password' => 'nullable|string|min:8',
+        'type' => 'required|in:admin,manager,commercial',
+    ]);
+
+    $data = [
+        'name' => $request->name,
+        'email' => $request->email,
+        'type' => $request->type,
+    ];
+
+    if ($request->filled('password')) {
+        $data['password'] = bcrypt($request->password);
+    }
+
+    $user->update($data);
+
+    return redirect()->route('utilisateurs.index')->with('success', 'Utilisateur mis à jour avec succès.');
+}
 }
